@@ -1,0 +1,13 @@
+Acme Robotics Employee Handbook: Expenses and Equipment
+
+Travel and Expense Reimbursement:
+When traveling for official company business, meals are reimbursed up to a maximum of $40 per day. Alcohol is never reimbursable. Lodging is reimbursed up to $200 per night in standard cities and up to $300 per night in New York, San Francisco, and Boston. Flights must be booked in economy class through the Spendly Travel portal at least 14 days in advance whenever possible. Personal vehicle mileage is reimbursed at $0.70 per mile.
+
+Expense Report Rules:
+All expense reports must be submitted within 30 days of the expense date through the official Spendly app. Reports submitted after 30 days are rejected unless a director approves an exception in writing. Physical or digital receipts are strictly required for any individual purchase above $25. Purchases under $25 do not require a receipt but must be accurately logged. Reimbursements are paid within 10 business days of manager approval.
+
+Equipment Provisioning:
+Company-issued laptops are refreshed on a standard 36-month cycle. Engineers who work with simulation or 3D CAD software may request a high-performance laptop, which requires approval from their director. Upon joining the company, each new employee receives a one-time home-office stipend of $500 to purchase ergonomic chairs, desks, or monitors. This stipend is paid out in the first paycheck and does not require receipt submission, though it is taxable income.
+
+Lost or Stolen Equipment:
+Lost or stolen company devices must be reported to the IT helpdesk within 24 hours. The employee is not charged for the first loss, but a second loss within a 36-month period may require a $250 replacement fee.

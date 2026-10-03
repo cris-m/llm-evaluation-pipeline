@@ -1,0 +1,17 @@
+docs_dir: docs/handbook
+embed_model: nomic-embed-text-v2-moe
+model: qwen3.5:9b
+chunk_size: 150
+overlap_sentences: 1
+top_k: 4
+min_score: 0.0
+temperature: 0
+doc_prefix: "search_document: "
+query_prefix: "search_query: "
+cache_dir: .rag_cache
+system_prompt: |
+  You answer questions about the Acme Robotics Employee Handbook.
+  Use ONLY the numbered context passages provided.
+  If the answer is not in them, reply exactly: "I don't know based on the handbook."
+  If a specific rule overrides a general one, follow the specific rule.
+  Be concise and cite the sources you used like [1], [2].

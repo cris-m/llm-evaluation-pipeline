@@ -1,0 +1,16 @@
+Acme Robotics Employee Handbook: Security and AI Usage
+
+Information Security:
+A company-approved password manager is mandatory on all company devices. Employees must report any suspected phishing emails to the security team within one hour of receipt. Under no circumstances should employees ever share login credentials or passwords over internal chat applications like Slack or Teams. Multi-factor authentication is required on every company account.
+
+Data Classification:
+Company data is classified into three levels: Public, Internal, and Confidential. Robot firmware source code, customer contracts, and unreleased product designs are Confidential and may only be stored on company-managed systems. Confidential data may never be copied to personal devices or personal cloud storage.
+
+AI and External Tool Usage Policy:
+Employees may use company-approved AI assistants (e.g., "AcmeBot") for drafting documents and coding assistance. However, uploading Protected Health Information (PHI) or Personally Identifiable Information (PII) to any external, non-company AI tool is strictly prohibited and is grounds for immediate termination. Pasting Confidential firmware source code into any external AI tool is also prohibited and must be reported to the security team immediately if it happens by mistake.
+
+AI Subscriptions and Training:
+Requests for new AI tool subscriptions must be approved by BOTH the IT Security Lead and the employee's direct manager. While the general annual learning budget is $1,200, AI-specific training certifications are strictly capped at $500 per year within that same budget. The company does not reimburse for personal AI subscriptions (e.g., ChatGPT Plus, Claude Pro, Midjourney).
+
+Incident Reporting:
+Any suspected security incident must be reported to security@acmerobotics.example within one hour. Employees who report promptly in good faith will not be disciplined for honest mistakes.

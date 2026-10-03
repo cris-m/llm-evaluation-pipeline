@@ -1,0 +1,16 @@
+Acme Robotics Employee Handbook: Learning and Development
+
+Annual Learning Budget:
+Every full-time employee has a dedicated learning budget of $1,200 per calendar year. This budget can be used for professional courses, technical books, and industry conferences. Part-time employees receive a prorated budget of $600 per calendar year. Unused budget does not roll over to the next year.
+
+Approval Workflow:
+Manager approval is not needed for any learning-related purchases under $300. For purchases between $300 and $1,200, direct manager approval is required via the internal HR portal. Managers must respond to approval requests within 5 business days.
+
+Conference Attendance:
+Conference registration fees are paid from the learning budget. Travel and lodging for conferences are not part of the learning budget and follow the Travel and Expense Reimbursement rules. Employees who attend a conference must share a 15-minute summary with their team within 2 weeks of returning.
+
+Tuition Reimbursement:
+Separate from the learning budget, the company reimburses up to $5,000 per year for degree-granting programs related to the employee's role, after 1 year of employment. Reimbursement requires a grade of B or higher. Employees who leave within 12 months of reimbursement must repay it.
+
+General Training Note:
+All standard training requests follow these general learning budget rules and approval workflows unless explicitly overridden by a specific IT or Security policy addendum. Employees are encouraged to maximize this budget for continuous skill development.

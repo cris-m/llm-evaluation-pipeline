@@ -1,0 +1,13 @@
+Acme Robotics Employee Handbook: Code of Conduct
+
+Respectful Workplace:
+Harassment and discrimination of any kind are prohibited. Employees who experience or witness inappropriate behavior should report it to HR or to the confidential ethics hotline. Retaliation against anyone who reports in good faith is itself a serious violation.
+
+Gifts and Hospitality:
+Employees may accept gifts from vendors or customers worth up to $100 per year from any single source. Anything above that must be declined or reported to the Compliance team. Cash gifts are never allowed, regardless of amount.
+
+Conflicts of Interest:
+Employees must disclose outside employment, board seats, and financial interests in competitors, suppliers, or customers. Outside work in robotics or automation requires written approval from HR.
+
+Confidentiality After Employment:
+The confidentiality obligations in the employee agreement continue after leaving the company. Former employees may not use or share Confidential data, including source code and customer lists.

@@ -1,0 +1,26 @@
+[project]
+name = "evaluation"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "cris_", email = "crixus_0@protonmail.com" }
+]
+requires-python = ">=3.12"
+dependencies = [
+    "numpy>=2.5.3",
+    "ollama>=0.6.3",
+    "pandas>=3.0.6",
+    "pydantic>=2.13.5",
+    "pytest>=9.1.1",
+    "pyyaml>=6.0.3",
+    "scikit-learn>=1.9.1",
+    "streamlit>=1.65.0",
+]
+
+[project.scripts]
+evaluation = "evaluation:main"
+
+[build-system]
+requires = ["uv_build>=0.12.17,<0.13.0"]
+build-backend = "uv_build"

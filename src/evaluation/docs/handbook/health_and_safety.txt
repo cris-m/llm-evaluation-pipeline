@@ -1,0 +1,16 @@
+Acme Robotics Employee Handbook: Health and Safety
+
+Robot Lab Access:
+Only employees who have completed the Robot Cell Safety course may enter an active robot cell. The course must be renewed every 12 months. Visitors must be escorted at all times and may not enter an active robot cell under any circumstances.
+
+Protective Equipment:
+Safety glasses are required in all lab areas. Steel-toed shoes are required whenever heavy robotic arms, rated above 20 kg payload, are being moved or installed. Hearing protection is required in the Pittsburgh machining area.
+
+Emergency Stop and Lockout:
+Every robot cell has a red emergency stop button. Anyone who sees a dangerous situation must press it immediately without waiting for permission. Before performing maintenance on a robot, the technician must apply a personal lockout/tagout lock; no one else may remove it.
+
+Incident Reporting:
+All injuries and near-misses must be reported to the Safety Officer within 24 hours, even if no one was hurt. Reporting a near-miss is never grounds for discipline.
+
+Ergonomics:
+Employees who work at a desk may request an ergonomic assessment from HR. The one-time home-office stipend can be used to buy equipment recommended in the assessment.

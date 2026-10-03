@@ -1,0 +1,16 @@
+Acme Robotics Employee Handbook: IT and Support
+
+Helpdesk:
+The IT helpdesk is available Monday to Friday from 8:00 AM to 6:00 PM Eastern Time. Urgent issues outside those hours, such as a suspected account compromise, can be reported to the on-call line. Tickets are opened through the internal IT portal.
+
+First Week Checklist:
+On day one, new employees receive their laptop and set up the password manager and multi-factor authentication. By the end of the first week they must complete the security awareness training and sign the acceptable use policy.
+
+Software Requests:
+General software subscriptions costing less than $50 per month need only direct manager approval. Subscriptions at or above $50 per month also need IT approval. AI tool subscriptions follow a stricter rule, described in the Security and AI Usage document, and always need both the IT Security Lead and the direct manager, regardless of price.
+
+VPN and Network:
+The company VPN must be used on any public Wi-Fi network. Personal devices may access company email through the managed mobile app but may not store Confidential data.
+
+Password Rules:
+Passwords are managed by the company password manager. Employees should use generated passwords of at least 16 characters. Shared team accounts must have a named owner who is responsible for rotating the password every 90 days.
