@@ -1,6 +1,14 @@
 # RAG App Walkthrough
 
- The idea is pretty simple: load the documents, split them into chunks, turn the chunks into vectors, and use the most relevant ones to answer questions with a local LLM.
+ The idea is pretty simple: load the documents, split them into chunks, turn those chunks into vectors, and use the highest-scoring chunks to answer questions with a local LLM.
+
+ The important part is that **each step can fail in a different way**. Retrieval can return the wrong chunks. Chunking can split useful information apart. The LLM can ignore the context or make up an answer. Module 5 is about learning how to tell these failures apart.
+
+ The code is in [app.py](../src/evaluation/app.py). Read it top to bottom before you run it. The main flow is:
+
+1. `RagApp._load_chunks()` reads the handbook files and calls `chunk_document()` to split them into chunks.
+2. `RagApp.retrieve()` finds the chunks that are most relevant to the question.
+3. `RagApp.answer()` sends those chunks to the local LLM and returns the answer along with the chunks it used.
 
 ---
 
@@ -74,7 +82,7 @@ def load_config(path=CONFIG_PATH, overrides=None):
 
  ## 3. `split_sentences(text)`
 
-```
+```python
 return re.split(r"(?<=[.!?])\s+", text.strip())
 ```
 
@@ -151,7 +159,7 @@ else:
 Vacation Policy:
 ```
 
- The header is kept as a label rather than being treated as part of the chunking itself.
+The label gives the LLM some information about where the chunk came from, and because it is part of the embedded text, it also gives the retrieval model useful section/title information.
 
  Then each chunk gets a label:
 
@@ -160,7 +168,7 @@ label = f"{title} | {header}".rstrip(" |") if header else title
 out.append({"source": os.path.basename(source), "text": f"{label}\n{c}"})
 ```
 
- So a chunk might start with something like:
+So a chunk might start with something like:
 
 ```
 handbook | Vacation Policy
@@ -329,7 +337,7 @@ if not hits:
 
  > I don't know based on the handbook.
 
- This gives us a simple fallback when there isn't useful context.
+This gives us a simple fallback when retrieval returns no chunks above the configured similarity threshold.
 
  When there are results, they are numbered:
 
@@ -360,7 +368,7 @@ context = "\n\n".join(
 
  The temperature is set to `0`, which keeps the output deterministic.
 
- The returned result includes the answer, the retrieved context, the source files, and the scores. That makes it easier to inspect what happened during retrieval.
+The returned result includes the answer, the retrieved contexts, the source files, and the retrieval hits, including their similarity scores. That makes it easier to inspect what happened during retrieval.
 
 ---
 
