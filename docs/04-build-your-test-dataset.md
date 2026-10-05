@@ -18,14 +18,14 @@ Set aside about 20% as a holdout set and keep it out of your tuning loop. Don't 
 
 **Build:** Save your test cases in `dataset.jsonl`, one JSON object per line. Each case has six fields:
 
-| Field | What it's for |
-|---|---|
-| `id` | A unique ID |
-| `question` | What you ask the system |
-| `expected` | A readable reference answer. The judge uses it. |
+| Field          | What it's for                                                                                                                                                     |
+| -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `id`           | A unique ID                                                                                                                                                       |
+| `question`     | What you ask the system                                                                                                                                           |
+| `expected`     | A readable reference answer. The judge uses it.                                                                                                                   |
 | `must_contain` | Short strings the answer must include, for the code check. Leave it `[]` when a code check would be unreliable, such as yes/no answers, and let the judge decide. |
-| `evidence` | Short exact quotes from the docs that contain the answer. The retrieval check uses them. |
-| `tags` | Labels that describe the case |
+| `evidence`     | Short exact quotes from the docs that contain the answer. The retrieval check uses them.                                                                          |
+| `tags`         | Labels that describe the case                                                                                                                                     |
 
 For an unanswerable case, set `expected` to `null` and leave `must_contain` and `evidence` empty. The right behavior is to say "I don't know," not make up an answer.
 

@@ -1,10 +1,10 @@
 # RAG App Walkthrough
 
- The idea is pretty simple: load the documents, split them into chunks, turn those chunks into vectors, and use the highest-scoring chunks to answer questions with a local LLM.
+The idea is pretty simple: load the documents, split them into chunks, turn those chunks into vectors, and use the highest-scoring chunks to answer questions with a local LLM.
 
- The important part is that **each step can fail in a different way**. Retrieval can return the wrong chunks. Chunking can split useful information apart. The LLM can ignore the context or make up an answer. Module 5 is about learning how to tell these failures apart.
+The important part is that **each step can fail in a different way**. Retrieval can return the wrong chunks. Chunking can split useful information apart. The LLM can ignore the context or make up an answer. Module 5 is about learning how to tell these failures apart.
 
- The code is in [app.py](../src/evaluation/app.py). Read it top to bottom before you run it. The main flow is:
+The code is in [app.py](../src/evaluation/app.py). Read it top to bottom before you run it. The main flow is:
 
 1. `RagApp._load_chunks()` reads the handbook files and calls `chunk_document()` to split them into chunks.
 2. `RagApp.retrieve()` finds the chunks that are most relevant to the question.
@@ -12,9 +12,9 @@
 
 ---
 
- ## 1. The config file (`configs/v1.yaml`)
+## 1. The config file (`configs/v1.yaml`)
 
- Before getting into the code, let's look at the config file:
+Before getting into the code, let's look at the config file:
 
 ```yaml
 docs_dir: docs/handbook
@@ -36,9 +36,9 @@ system_prompt: |
   Be concise and cite the sources you used like [1], [2].
 ```
 
- Here is what the settings are for:
+Here is what the settings are for:
 
- - `docs_dir`: folder containing the handbook `.txt` files. It's a relative path, resolved against the script's own folder.
+- `docs_dir`: folder containing the handbook `.txt` files. It's a relative path, resolved against the script's own folder.
 - `embed_model`: the model used to turn text into vectors.
 - `model`: the LLM used to generate the final answer.
 - `chunk_size`: target size of each chunk, in words.
@@ -52,18 +52,18 @@ system_prompt: |
 
 ---
 
- ## 2. Loading the config from YAML
+## 2. Loading the config from YAML
 
- At the top of the file we define where the config lives:
+At the top of the file we define where the config lives:
 
 ```python
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 CONFIG_PATH = os.path.join(BASE_DIR, "configs", "v1.yaml")
 ```
 
- `BASE_DIR` is the folder where the script is located. Building paths from it means the app doesn't depend on the folder you're currently in when you run it.
+`BASE_DIR` is the folder where the script is located. Building paths from it means the app doesn't depend on the folder you're currently in when you run it.
 
- Then the config loader:
+Then the config loader:
 
 ```python
 def load_config(path=CONFIG_PATH, overrides=None):
@@ -74,27 +74,27 @@ def load_config(path=CONFIG_PATH, overrides=None):
     return config
 ```
 
- `yaml.safe_load` reads the YAML and turns it into a Python dictionary.
+`yaml.safe_load` reads the YAML and turns it into a Python dictionary.
 
- The `or {}` is just a small guard for an empty YAML file. In that case `safe_load` returns `None`, so we use an empty dictionary instead.
+The `or {}` is just a small guard for an empty YAML file. In that case `safe_load` returns `None`, so we use an empty dictionary instead.
 
 ---
 
- ## 3. `split_sentences(text)`
+## 3. `split_sentences(text)`
 
 ```python
 return re.split(r"(?<=[.!?])\s+", text.strip())
 ```
 
- This splits the text into sentences.
+This splits the text into sentences.
 
- The `(?<=[.!?])` part means that it looks for whitespace immediately after `.`, `!`, or `?`. The punctuation stays attached to the sentence.
+The `(?<=[.!?])` part means that it looks for whitespace immediately after `.`, `!`, or `?`. The punctuation stays attached to the sentence.
 
- It's a simple sentence splitter rather than a full NLP sentence tokenizer, which is enough for these documents.
+It's a simple sentence splitter rather than a full NLP sentence tokenizer, which is enough for these documents.
 
 ---
 
- ## 4. `chunk_sentences(text, max_words=150, overlap_sentences=1)`
+## 4. `chunk_sentences(text, max_words=150, overlap_sentences=1)`
 
 ```python
 chunks, current, count = [], [], 0
@@ -108,29 +108,29 @@ for s in split_sentences(text):
     count += n
 ```
 
- The function goes through the document sentence by sentence and keeps track of how many words are in the current chunk.
+The function goes through the document sentence by sentence and keeps track of how many words are in the current chunk.
 
- When adding another sentence would take the chunk over the word limit, the current chunk is saved and a new one starts.
+When adding another sentence would take the chunk over the word limit, the current chunk is saved and a new one starts.
 
- The overlap comes from:
+The overlap comes from:
 
 ```python
 current = current[-overlap_sentences:]
 ```
 
- With `overlap_sentences: 1`, the last sentence from the previous chunk is carried into the next one.
+With `overlap_sentences: 1`, the last sentence from the previous chunk is carried into the next one.
 
- This is useful because sometimes an idea starts near the end of one chunk and continues into the next. Having the last sentence repeated gives retrieval a better chance of finding the relevant context.
+This is useful because sometimes an idea starts near the end of one chunk and continues into the next. Having the last sentence repeated gives retrieval a better chance of finding the relevant context.
 
- The final chunk is added after the loop so any remaining text isn't lost.
+The final chunk is added after the loop so any remaining text isn't lost.
 
 ---
 
- ## 5. `chunk_document(text, source, ...)`
+## 5. `chunk_document(text, source, ...)`
 
- This function adds some structure on top of the basic chunking.
+This function adds some structure on top of the basic chunking.
 
- First, the document is split into sections:
+First, the document is split into sections:
 
 ```python
 sections = re.split(r"\n\s*\n", text.strip())
@@ -139,11 +139,11 @@ if len(sections) > 1 and "\n" not in sections[0]:
     title, sections = sections[0], sections[1:]
 ```
 
- The file is split on blank lines.
+The file is split on blank lines.
 
- If the first section is just a single line, it is treated as the document title. Otherwise, the filename is used as the title.
+If the first section is just a single line, it is treated as the document title. Otherwise, the filename is used as the title.
 
- For each section, the first line is checked:
+For each section, the first line is checked:
 
 ```python
 first, _, rest = sec.partition("\n")
@@ -153,7 +153,7 @@ else:
     header, body = "", sec
 ```
 
- If the first line ends with `:`, we treat it as a section header, for example:
+If the first line ends with `:`, we treat it as a section header, for example:
 
 ```
 Vacation Policy:
@@ -161,7 +161,7 @@ Vacation Policy:
 
 The label gives the LLM some information about where the chunk came from, and because it is part of the embedded text, it also gives the retrieval model useful section/title information.
 
- Then each chunk gets a label:
+Then each chunk gets a label:
 
 ```python
 label = f"{title} | {header}".rstrip(" |") if header else title
@@ -174,38 +174,38 @@ So a chunk might start with something like:
 handbook | Vacation Policy
 ```
 
- That gives the LLM some information about where the chunk came from, and it also adds a few useful keywords for the embedding model.
+That gives the LLM some information about where the chunk came from, and it also adds a few useful keywords for the embedding model.
 
 ---
 
- ## 6. `embed(texts, model, batch_size=32)`
+## 6. `embed(texts, model, batch_size=32)`
 
- At the end of the embedding function:
+At the end of the embedding function:
 
 ```python
 v = np.array(vecs, dtype=np.float32)
 return v / np.maximum(np.linalg.norm(v, axis=1, keepdims=True), 1e-12)
 ```
 
- The texts are sent to Ollama in batches instead of one at a time. The default batch size is 32.
+The texts are sent to Ollama in batches instead of one at a time. The default batch size is 32.
 
- After that, the vectors are normalized.
+After that, the vectors are normalized.
 
- Why do this?
+Why do this?
 
- Once every vector has a length of 1, the dot product between two vectors is the same as their cosine similarity. That means retrieval can later do:
+Once every vector has a length of 1, the dot product between two vectors is the same as their cosine similarity. That means retrieval can later do:
 
 ```python
 self.vecs @ query
 ```
 
- to compare the query against all document vectors at once.
+to compare the query against all document vectors at once.
 
- The `1e-12` is just there to avoid a division-by-zero problem if an empty vector somehow appears.
+The `1e-12` is just there to avoid a division-by-zero problem if an empty vector somehow appears.
 
 ---
 
- ## 7. `RagApp.__init__(config)`
+## 7. `RagApp.__init__(config)`
 
 ```python
 def __init__(self, config: dict):
@@ -214,15 +214,15 @@ def __init__(self, config: dict):
     self.vecs = self._embed_chunks()
 ```
 
- The config is loaded before the app is created.
+The config is loaded before the app is created.
 
- The constructor stores the config, loads and chunks the documents, and then creates the embeddings.
+The constructor stores the config, loads and chunks the documents, and then creates the embeddings.
 
- This all happens once when the app starts. After that, the app is ready to handle questions.
+This all happens once when the app starts. After that, the app is ready to handle questions.
 
 ---
 
- ## 8\. `_load_chunks()`
+## 8\. `_load_chunks()`
 
 ```
 docs_dir = self.cfg["docs_dir"]
@@ -230,15 +230,15 @@ if not os.path.isabs(docs_dir):
     docs_dir = os.path.join(BASE_DIR, docs_dir)
 ```
 
- The `docs_dir` from the YAML can be a relative path such as:
+The `docs_dir` from the YAML can be a relative path such as:
 
 ```
 docs/handbook
 ```
 
- The code resolves that path against `BASE_DIR`, so it always points to the handbook folder inside the project rather than a folder relative to wherever the terminal happens to be.
+The code resolves that path against `BASE_DIR`, so it always points to the handbook folder inside the project rather than a folder relative to wherever the terminal happens to be.
 
- Then the `.txt` files are found:
+Then the `.txt` files are found:
 
 ```python
 paths = sorted(glob.glob(os.path.join(docs_dir, "*.txt")))
@@ -246,19 +246,19 @@ if not paths:
     raise FileNotFoundError(f"No .txt files found in '{docs_dir}/'")
 ```
 
- All `.txt` files are loaded in sorted order.
+All `.txt` files are loaded in sorted order.
 
- If there aren't any files, the app raises a clear error instead of continuing and failing somewhere later.
+If there aren't any files, the app raises a clear error instead of continuing and failing somewhere later.
 
- Each file is read and passed to `chunk_document()`. The chunks from all the files are then combined into one list.
+Each file is read and passed to `chunk_document()`. The chunks from all the files are then combined into one list.
 
 ---
 
- ## 9. `_embed_chunks()` — the cache
+## 9. `_embed_chunks()` — the cache
 
- Embedding all the chunks can take a while, so the app caches the results.
+Embedding all the chunks can take a while, so the app caches the results.
 
- The cache key is built from:
+The cache key is built from:
 
 ```python
 key_data = [
@@ -270,13 +270,13 @@ key_data = [
 ]
 ```
 
- The idea is that anything that can change the resulting vectors should be part of the cache key.
+The idea is that anything that can change the resulting vectors should be part of the cache key.
 
- That includes the embedding model, document prefix, chunk size, overlap setting, and the actual text being embedded.
+That includes the embedding model, document prefix, chunk size, overlap setting, and the actual text being embedded.
 
- This is useful when changing the config. For example, if you change `chunk_size` or `overlap_sentences`, the old embeddings won't accidentally be reused.
+This is useful when changing the config. For example, if you change `chunk_size` or `overlap_sentences`, the old embeddings won't accidentally be reused.
 
- The cache directory is handled the same way as `docs_dir`:
+The cache directory is handled the same way as `docs_dir`:
 
 ```python
 cache_dir = self.cfg["cache_dir"]
@@ -285,17 +285,17 @@ if not os.path.isabs(cache_dir):
 os.makedirs(cache_dir, exist_ok=True)
 ```
 
- If the cache directory doesn't exist, it gets created.
+If the cache directory doesn't exist, it gets created.
 
- If the cache file already exists, the embeddings are loaded from it. Otherwise, the app calls `embed()`, saves the result, and uses it.
+If the cache file already exists, the embeddings are loaded from it. Otherwise, the app calls `embed()`, saves the result, and uses it.
 
 ---
 
- ## 10. `retrieve(question, k=None)`
+## 10. `retrieve(question, k=None)`
 
- This is the retrieval part of the RAG pipeline.
+This is the retrieval part of the RAG pipeline.
 
- First, the question is embedded:
+First, the question is embedded:
 
 ```python
 query = embed(
@@ -305,27 +305,27 @@ query = embed(
 scores = self.vecs @ query
 ```
 
- The `search_query: ` prefix is added before embedding the question.
+The `search_query: ` prefix is added before embedding the question.
 
- Then the query vector is compared against all the document vectors with one matrix multiplication.
+Then the query vector is compared against all the document vectors with one matrix multiplication.
 
- The results are sorted:
+The results are sorted:
 
 ```python
 for index in np.argsort(-scores)[:k]:
 ```
 
- `np.argsort(-scores)` puts the highest scores first, and `[:k]` keeps the top `k` results.
+`np.argsort(-scores)` puts the highest scores first, and `[:k]` keeps the top `k` results.
 
- The `min_score` setting is also used to remove results that don't meet the minimum similarity threshold. With the current value of `0.0`, that filter is effectively disabled.
+The `min_score` setting is also used to remove results that don't meet the minimum similarity threshold. With the current value of `0.0`, that filter is effectively disabled.
 
- Each result keeps the original chunk information along with its similarity score.
+Each result keeps the original chunk information along with its similarity score.
 
 ---
 
- ## 11. `answer(question)`
+## 11. `answer(question)`
 
- The first thing `answer()` does is retrieve the relevant chunks:
+The first thing `answer()` does is retrieve the relevant chunks:
 
 ```python
 hits = self.retrieve(question)
@@ -333,13 +333,13 @@ if not hits:
     return {"answer": "I don't know based on the handbook.", ...}
 ```
 
- If nothing is retrieved, the app doesn't call the LLM. It just returns:
+If nothing is retrieved, the app doesn't call the LLM. It just returns:
 
- > I don't know based on the handbook.
+> I don't know based on the handbook.
 
 This gives us a simple fallback when retrieval returns no chunks above the configured similarity threshold.
 
- When there are results, they are numbered:
+When there are results, they are numbered:
 
 ```python
 context = "\n\n".join(
@@ -349,7 +349,7 @@ context = "\n\n".join(
 )
 ```
 
- The LLM sees the chunks as:
+The LLM sees the chunks as:
 
 ```bash
 [1] (source: handbook.txt)
@@ -359,31 +359,31 @@ context = "\n\n".join(
 ...
 ```
 
- Those numbers match the instructions in the system prompt, so the model can cite the passages it used.
+Those numbers match the instructions in the system prompt, so the model can cite the passages it used.
 
- Then `ollama.chat()` gets two messages:
+Then `ollama.chat()` gets two messages:
 
- 1. The system prompt with the rules.
+1. The system prompt with the rules.
 2. The user message containing the retrieved context and the question.
 
- The temperature is set to `0`, which keeps the output deterministic.
+The temperature is set to `0`, which keeps the output deterministic.
 
 The returned result includes the answer, the retrieved contexts, the source files, and the retrieval hits, including their similarity scores. That makes it easier to inspect what happened during retrieval.
 
 ---
 
- ## 12. The `__main__` block
+## 12. The `__main__` block
 
- The app starts with:
+The app starts with:
 
 ```python
 config = load_config()
 app = RagApp(config)
 ```
 
- The config is loaded from `configs/v1.yaml`, and then the RAG app is created.
+The config is loaded from `configs/v1.yaml`, and then the RAG app is created.
 
- The rest is a simple question loop:
+The rest is a simple question loop:
 
 ```python
 while True:
@@ -392,23 +392,22 @@ while True:
         break
 ```
 
- Type a question, get an answer. Press Enter on an empty line to exit.
+Type a question, get an answer. Press Enter on an empty line to exit.
 
- The older version used a one-liner with the walrus operator. This version uses a regular `while True` loop and an explicit `break`, which is a little easier to follow.
+The older version used a one-liner with the walrus operator. This version uses a regular `while True` loop and an explicit `break`, which is a little easier to follow.
 
 ---
 
- ## The whole flow
+## The whole flow
 
- The app loads the YAML config, reads the handbook documents, splits them into labeled chunks, embeds them, and caches the embeddings.
+The app loads the YAML config, reads the handbook documents, splits them into labeled chunks, embeds them, and caches the embeddings.
 
- When a question comes in, the question is embedded and compared against all the document chunks. The top results are passed to the LLM along with instructions to only use that context and cite the passages it used.
+When a question comes in, the question is embedded and compared against all the document chunks. The top results are passed to the LLM along with instructions to only use that context and cite the passages it used.
 
- If nothing useful is retrieved, the app returns:
+If nothing useful is retrieved, the app returns:
 
- > I don't know based on the handbook.
+> I don't know based on the handbook.
 
- The nice part is that most of the retrieval settings live in `configs/v1.yaml`. If you want to change the chunk size or `min_score`, you can change the config and restart the app. The cache key will take care of generating new embeddings when the relevant settings change.
+The nice part is that most of the retrieval settings live in `configs/v1.yaml`. If you want to change the chunk size or `min_score`, you can change the config and restart the app. The cache key will take care of generating new embeddings when the relevant settings change.
 
- > **Test questions:** See [test_questions.md](src/evaluation/docs/test_questions.md) for example questions used to manually test the RAG app.
- 
+> **Test questions:** See [test_questions.md](src/evaluation/docs/test_questions.md) for example questions used to manually test the RAG app.

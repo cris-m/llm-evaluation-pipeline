@@ -17,6 +17,8 @@ model's answers with test cases, a judge model, and metrics.
 
 1. [Introduction and setup](docs/01-introduction.md)
 2. [RAG app walkthrough](docs/02-rag-app-walkthrough.md)
+3. [Defining evaluation criteria](docs/03-defining-evaluation-criteria.md)
+4. [Build dataset](docs/04-build-your-test-dataset.md)
 
 ## Requirements
 
