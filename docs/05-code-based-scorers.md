@@ -15,7 +15,7 @@ The downside is that code is not very good at judging things like whether an ans
 ### Code-based scorers
 
 Each scorer checks one thing about one evaluation result. The scorer implementations
-are in [`scorers.py`](../src/evaluation/scorers.py). They all have the same basic
+are in [`code_scorers.py`](../src/evaluation/code_scorers.py). They all have the same basic
 shape: the function gets the test case and the app output, and returns a dictionary
 containing a score between 0 and 1.
 

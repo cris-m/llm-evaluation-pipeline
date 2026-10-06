@@ -8,7 +8,7 @@ from datetime import datetime
 from pathlib import Path
 
 from evaluation.app import CONFIG_PATH, RagApp, load_config
-from evaluation.scorers import SCORERS
+from evaluation.code_scorers import SCORERS
 
 BASE_DIR = Path(__file__).resolve().parent
 DATASET_PATH = BASE_DIR / "datasets" / "dataset.jsonl"

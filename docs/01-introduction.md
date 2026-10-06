@@ -33,7 +33,7 @@ uv init
 uv venv
 uv add ollama numpy pandas pydantic pyyaml pytest streamlit scikit-learn
 source .venv/bin/activate              # Windows: .venv\Scripts\activate
-cd src/evaluation && mkdir docs configs runs datasets
+cd src/evaluation && mkdir docs configs datasets
 ```
 
 Quick rundown of the packages: `ollama` talks to the models, `numpy` and `pandas` for scores and tables, `pydantic` and `pyyaml` for config, `pytest` runs the tests, `streamlit` shows the results, `scikit-learn` for metrics.

@@ -19,6 +19,8 @@ model's answers with test cases, a judge model, and metrics.
 2. [RAG app walkthrough](docs/02-rag-app-walkthrough.md)
 3. [Defining evaluation criteria](docs/03-defining-evaluation-criteria.md)
 4. [Build dataset](docs/04-build-your-test-dataset.md)
+5. [Code based evaluation](docs/05-code-based-scorers.md)
+5. [LLM judge evaluation](docs/06-llm-as-judge-evaluation.md)
 
 ## Requirements
 
