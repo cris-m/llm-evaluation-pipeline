@@ -4,8 +4,10 @@ import os
 
 import ollama
 
-from evaluation.app import load_config, chunk_document
+from evaluation.app import chunk_document, load_config
 
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+OUTPUT_PATH = os.path.join(BASE_DIR, "datasets", "dataset_draft.jsonl")
 
 PROMPT = """From the passage, write 2 question/answer pairs.
 
@@ -13,7 +15,7 @@ For each pair, give:
 
 - "question": a question that can be answered from the passage
 - "expected": a readable reference answer
-- "must_contain": a short string the answer should contain for a simple code check
+- "must_contain": a list with a short string the answer should contain for a simple code check
 - "evidence": an exact quote of 3-10 words from the passage that supports the answer
 
 For "must_contain":
@@ -39,75 +41,80 @@ Passage:
 """
 
 
-config = load_config()
+def main() -> None:
+    config = load_config()
 
-docs_dir = config["docs_dir"]
-if not os.path.isabs(docs_dir):
-    docs_dir = os.path.join(
-        os.path.dirname(os.path.abspath(__file__)),
-        docs_dir,
-    )
-
-rows = []
-
-for path in sorted(glob.glob(os.path.join(docs_dir, "*.txt"))):
-    with open(path, "r", encoding="utf-8") as f:
-        chunks = chunk_document(
-            f.read(),
-            path,
-            config["chunk_size"],
-            config["overlap_sentences"],
+    model = config.get("judge_model")
+    if not model:
+        raise SystemExit(
+            "Add 'judge_model' to the config (a different model from 'model')."
         )
+    if model == config["model"]:
+        print(f"Warning: the question writer and the app both use {model}.")
 
-    for chunk in chunks:
-        passage = chunk["text"]
+    docs_dir = config["docs_dir"]
+    if not os.path.isabs(docs_dir):
+        docs_dir = os.path.join(BASE_DIR, docs_dir)
 
-        result = ollama.chat(
-            model=config["model"],
-            format="json",
-            messages=[
-                {
-                    "role": "user",
-                    "content": PROMPT.format(p=passage),
-                }
-            ],
-        )
+    rows, skipped = [], 0
 
-        pairs = json.loads(
-            result["message"]["content"]
-        ).get("pairs", [])
-
-        for pair in pairs:
-            evidence = pair.get("evidence", "")
-            must_contain = pair.get("must_contain", [])
-
-            if not evidence or evidence not in passage:
-                continue
-
-            if not isinstance(must_contain, list):
-                must_contain = [must_contain]
-
-            rows.append(
-                {
-                    "id": f"s{len(rows):03d}",
-                    "question": pair["question"],
-                    "expected": pair["expected"],
-                    "must_contain": must_contain,
-                    "evidence": [evidence],
-                    "tags": ["synthetic"],
-                }
+    for path in sorted(glob.glob(os.path.join(docs_dir, "*.txt"))):
+        with open(path, "r", encoding="utf-8") as f:
+            chunks = chunk_document(
+                f.read(), path, config["chunk_size"], config["overlap_sentences"]
             )
 
+        for chunk in chunks:
+            passage = chunk["text"]
+            result = ollama.chat(
+                model=model,
+                format="json",
+                messages=[{"role": "user", "content": PROMPT.format(p=passage)}],
+            )
 
-output_path = os.path.join(
-    os.path.dirname(os.path.abspath(__file__)),
-    "datasets",
-    "dataset_draft.jsonl",
-)
+            try:
+                pairs = json.loads(result["message"]["content"]).get("pairs", [])
+            except (json.JSONDecodeError, AttributeError):
+                skipped += 1
+                continue
 
-with open(output_path, "w", encoding="utf-8") as f:
-    f.write(
-        "\n".join(json.dumps(row) for row in rows)
-    )
+            for pair in pairs:
+                if not isinstance(pair, dict):
+                    continue
+                evidence = pair.get("evidence", "")
+                if isinstance(evidence, list):
+                    evidence = evidence[0] if evidence else ""
+                must_contain = pair.get("must_contain", [])
+                if not isinstance(must_contain, list):
+                    must_contain = [must_contain]
 
-print(f"Wrote {len(rows)} draft cases to {output_path}")
+                if (
+                    not isinstance(evidence, str)
+                    or not evidence
+                    or evidence not in passage
+                    or not pair.get("question")
+                    or not pair.get("expected")
+                ):
+                    skipped += 1
+                    continue
+
+                rows.append(
+                    {
+                        "id": f"s{len(rows):03d}",
+                        "question": pair["question"],
+                        "expected": pair["expected"],
+                        "must_contain": [str(m) for m in must_contain],
+                        "evidence": [evidence],
+                        "tags": ["synthetic"],
+                    }
+                )
+
+    os.makedirs(os.path.dirname(OUTPUT_PATH), exist_ok=True)
+    with open(OUTPUT_PATH, "w", encoding="utf-8") as f:
+        f.write("\n".join(json.dumps(row, ensure_ascii=False) for row in rows) + "\n")
+
+    print(f"Wrote {len(rows)} draft cases to {OUTPUT_PATH} ({skipped} discarded)")
+
+
+if __name__ == "__main__":
+    main()

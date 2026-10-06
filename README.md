@@ -21,6 +21,7 @@ model's answers with test cases, a judge model, and metrics.
 4. [Build dataset](docs/04-build-your-test-dataset.md)
 5. [Code based evaluation](docs/05-code-based-scorers.md)
 5. [LLM judge evaluation](docs/06-llm-as-judge-evaluation.md)
+6. [Find out where it fails](docs/07-find-out-why-it-fails.md)
 
 ## Requirements
 

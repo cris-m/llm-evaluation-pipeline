@@ -60,7 +60,12 @@ def print_summary(results: list[dict]) -> None:
     )
     print("=" * 70)
     for name in JUDGES:
-        unscored = sum(1 for r in ok if r["scores"][name]["score"] is None)
+        unscored = sum(
+            1
+            for r in ok
+            if r["scores"][name]["score"] is None
+            and r["scores"][name].get("reason") != "no reference answer"
+        )
         if name in summary:
             s = summary[name]
             print(
@@ -90,10 +95,10 @@ def print_summary(results: list[dict]) -> None:
             if s["score"] is None:
                 if r["expected"] is not None or name != "correctness":
                     print(
-                        f"  {r['id']}: {name} failed ({s.get('error') or s['reason']})"
+                        f"  {r['id']}: {name} failed ({s.get('error') or s.get('reason')})"
                     )
             elif s["score"] < FLAG_BELOW[name]:
-                print(f"  {r['id']}: {name}={s['score']:.2f}  {s['reason']}")
+                print(f"  {r['id']}: {name}={s['score']:.2f}  {s.get('reason', '')}")
                 for claim in s.get("unsupported", []):
                     print(f"      unsupported: {claim}")
 
@@ -142,7 +147,11 @@ def calibrate(path: Path) -> None:
     from sklearn.metrics import cohen_kappa_score
 
     ids, human, judged = [], [], []
-    for row in load_dataset(path):
+    rows = load_dataset(path)
+    missing = [r["id"] for r in rows if not isinstance(r.get("human_score"), int)]
+    if missing:
+        raise SystemExit(f"human_score must be an integer 1-5. Bad rows: {missing[:5]}")
+    for row in rows:
         result = judge.evaluate_correctness(row, row)
         if result["score"] is None:
             print(f"{row['id']}: no score ({result['reason']})")
@@ -180,7 +189,7 @@ def main() -> None:
     parser.add_argument("--dataset", type=Path, default=DATASET_PATH)
     parser.add_argument("--tag", help="only run cases with this tag")
     parser.add_argument("--limit", type=int, help="only run the first N cases")
-    parser.add_argument("--judge-model", default=judge.MODEL)
+    parser.add_argument("--judge-model", help="default: judge_model from the config")
     parser.add_argument("--votes", type=int, default=judge.VOTES)
     parser.add_argument(
         "--calibrate", type=Path, help="check the judge against hand-graded answers"
@@ -197,7 +206,8 @@ def main() -> None:
     if args.votes <= 0:
         raise SystemExit("--votes must be greater than 0.")
 
-    judge.MODEL = args.judge_model
+    if args.judge_model:
+        judge.MODEL = args.judge_model
     judge.VOTES = args.votes
 
     if args.calibrate:
@@ -205,6 +215,8 @@ def main() -> None:
         return
 
     config = load_config(args.config)
+    if not args.judge_model and config.get("judge_model"):
+        judge.MODEL = config["judge_model"]
     dataset = load_dataset(args.dataset)
     if args.tag:
         dataset = [e for e in dataset if args.tag in e.get("tags", [])]

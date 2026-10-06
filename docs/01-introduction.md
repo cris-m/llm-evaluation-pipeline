@@ -18,9 +18,9 @@ ollama --version
 **2. Pull the models:**
 
 ```bash
-ollama pull gemma4:e4b                 # the app we're testing
-ollama pull qwen3.5:9b                 # the judge
-ollama pull nomic-embed-text-v2-moe    # embeddings
+ollama pull gemma4:e4b                # the judge
+ollama pull qwen3.5:9b                # the app we're testing
+ollama pull nomic-embed-text-v2-moe   # embeddings
 ```
 
 Why two chat models? Because the judge shouldn't grade its own homework. A different family means less bias. The embedding model is just there for retrieval.

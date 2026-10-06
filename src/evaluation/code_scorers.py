@@ -45,13 +45,15 @@ REFUSAL_PATTERNS = [
     r"\b(cannot|can'?t|can not) (determine|find|answer)\b",
 ]
 
+def is_refusal(answer: str) -> bool:
+    text = _normalize(answer)
+    return any(re.search(p, text) for p in REFUSAL_PATTERNS)
+
 
 def abstains_correctly(example: Example, output: Output) -> dict[str, Any]:
     if "unanswerable" not in example.get("tags", []):
         return {"score": None}
-
-    answer = _answer(output)
-    return {"score": float(any(re.search(p, answer) for p in REFUSAL_PATTERNS))}
+    return {"score": float(is_refusal(output.get("answer", "")))}
 
 
 def retrieval_hit(example: Example, output: Output) -> dict[str, Any]:
