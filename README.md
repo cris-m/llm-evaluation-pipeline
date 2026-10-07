@@ -22,6 +22,7 @@ model's answers with test cases, a judge model, and metrics.
 5. [Code based evaluation](docs/05-code-based-scorers.md)
 5. [LLM judge evaluation](docs/06-llm-as-judge-evaluation.md)
 6. [Find out where it fails](docs/07-find-out-why-it-fails.md)
+6. [Evaluation runner](docs/08.evaluation_runner.md)
 
 ## Requirements
 

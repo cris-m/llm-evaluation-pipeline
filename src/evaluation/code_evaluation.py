@@ -12,7 +12,7 @@ from evaluation.code_scorers import SCORERS
 
 BASE_DIR = Path(__file__).resolve().parent
 DATASET_PATH = BASE_DIR / "datasets" / "dataset.jsonl"
-RESULTS_DIR = BASE_DIR / "results"
+RESULTS_DIR = BASE_DIR / "runs"
 
 
 def load_dataset(path: Path) -> list[dict]:

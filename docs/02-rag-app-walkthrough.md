@@ -17,9 +17,11 @@ The code is in [app.py](../src/evaluation/app.py). Read it top to bottom before 
 Before getting into the code, let's look at the config file:
 
 ```yaml
+name: v1-baseline
 docs_dir: docs/handbook
 embed_model: nomic-embed-text-v2-moe
 model: qwen3.5:9b
+judge_model: gemma4:e4b
 chunk_size: 150
 overlap_sentences: 1
 top_k: 4
