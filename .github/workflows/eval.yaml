@@ -1,0 +1,50 @@
+name: eval
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  eval:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: src
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+      - run: uv sync
+
+      - name: Check the dataset
+        run: uv run python -m evaluation.check_dataset
+
+      - name: Install and start Ollama
+        run: |
+          curl -fsSL https://ollama.com/install.sh | sh
+          nohup ollama serve > ollama.log 2>&1 &
+          for i in $(seq 1 60); do curl -sf localhost:11434 > /dev/null && break; sleep 1; done
+          ollama pull llama3.2:1b
+          ollama pull nomic-embed-text
+
+      - name: Run the eval on the first 20 cases
+        run: >
+          uv run python -m evaluation.run_eval
+          --config evaluation/configs/ci.yaml --limit 20 --workers 1
+          --scorers must_contain,abstains_correctly,retrieval_hit,evidence_recall
+          --output evaluation/runs/ci.json
+
+      - name: Gate
+        run: >
+          uv run python -m evaluation.gate evaluation/runs/ci.json
+          --floors evaluation/configs/gate_ci.yaml
+
+      - name: Keep the run
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: eval-run
+          path: src/evaluation/runs/ci.json
+          if-no-files-found: warn

@@ -20,9 +20,10 @@ model's answers with test cases, a judge model, and metrics.
 3. [Defining evaluation criteria](docs/03-defining-evaluation-criteria.md)
 4. [Build dataset](docs/04-build-your-test-dataset.md)
 5. [Code based evaluation](docs/05-code-based-scorers.md)
-5. [LLM judge evaluation](docs/06-llm-as-judge-evaluation.md)
-6. [Find out where it fails](docs/07-find-out-why-it-fails.md)
-6. [Evaluation runner](docs/08.evaluation_runner.md)
+6. [LLM judge evaluation](docs/06-llm-as-judge-evaluation.md)
+7. [Find out where it fails](docs/07-find-out-why-it-fails.md)
+8. [Evaluation runner](docs/08.evaluation_runner.md)
+9. [Automation](docs/09-automation.md)
 
 ## Requirements
 

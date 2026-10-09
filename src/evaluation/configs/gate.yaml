@@ -1,0 +1,7 @@
+must_contain: 0.95
+retrieval_hit: 0.95
+evidence_recall: 0.95
+reciprocal_rank: 0.93
+correctness: 0.94
+faithfulness: 0.91
+abstains_correctly: 0.95

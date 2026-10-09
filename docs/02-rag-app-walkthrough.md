@@ -412,4 +412,4 @@ If nothing useful is retrieved, the app returns:
 
 The nice part is that most of the retrieval settings live in `configs/v1.yaml`. If you want to change the chunk size or `min_score`, you can change the config and restart the app. The cache key will take care of generating new embeddings when the relevant settings change.
 
-> **Test questions:** See [test_questions.md](src/evaluation/docs/test_questions.md) for example questions used to manually test the RAG app.
+> **Test questions:** See [test_questions.md](../src/evaluation/docs/test_questions.md) for example questions used to manually test the RAG app.

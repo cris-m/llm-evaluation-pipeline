@@ -1,0 +1,4 @@
+must_contain: 0.81
+retrieval_hit: 0.9
+evidence_recall: 0.89
+abstains_correctly: 0.74

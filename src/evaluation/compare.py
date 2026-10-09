@@ -129,7 +129,7 @@ def print_header(run_a: dict, run_b: dict) -> None:
             and isinstance(after, str)
             and "\n" in (before + after)
         ):
-            print(f"  {k}:")  # long text: show only the lines that changed
+            print(f"  {k}:")
             for line in difflib.unified_diff(
                 before.splitlines(), after.splitlines(), lineterm="", n=0
             ):

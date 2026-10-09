@@ -1,0 +1,1135 @@
+{
+  "meta": {
+    "run_id": "61c867f3",
+    "name": "bad-prompt",
+    "timestamp": "2026-10-08T20:01:32",
+    "duration_seconds": 3424.2,
+    "config": {
+      "name": "bad-prompt",
+      "docs_dir": "docs/handbook",
+      "embed_model": "nomic-embed-text-v2-moe",
+      "model": "qwen3.5:9b",
+      "judge_model": "gemma4:e4b",
+      "chunk_size": 150,
+      "overlap_sentences": 1,
+      "top_k": 4,
+      "min_score": 0.0,
+      "temperature": 0,
+      "doc_prefix": "search_document: ",
+      "query_prefix": "search_query: ",
+      "cache_dir": ".rag_cache",
+      "system_prompt": "You answer questions about the Acme Robotics Employee Handbook.\nAlways give a confident, specific answer with a number or a date.\nIf the context doesn't say, make a reasonable guess. Never say you don't know."
+    },
+    "dataset": "dataset.jsonl",
+    "dataset_sha": "c251f31b794c",
+    "n_cases": 20,
+    "tag": null,
+    "limit": 20,
+    "scorers": [
+      "must_contain",
+      "abstains_correctly",
+      "retrieval_hit",
+      "evidence_recall",
+      "reciprocal_rank",
+      "latency_ok",
+      "correctness",
+      "faithfulness"
+    ],
+    "workers": 2,
+    "judge_model": "gemma4:e4b",
+    "judge_votes": 3
+  },
+  "results": [
+    {
+      "id": "q001",
+      "question": "How many vacation days do new employees get?",
+      "tags": [
+        "easy"
+      ],
+      "expected": "15 vacation days per year",
+      "answer": "New employees receive 15 vacation days per year.",
+      "sources": [
+        "compensation_and_performance.txt",
+        "general_policies.txt"
+      ],
+      "contexts": [
+        "Acme Robotics Employee Handbook: General Policies | Time Off Policy:\nNew employees receive 15 vacation days per year. After 3 years of continuous service, this increases to 20 days per year. Up to 5 unused vacation days may be carried over into the next calendar year; any days above 5 are forfeited on December 31. The company is officially closed between December 25 and January 1. These closure days do not count against an employee's accrued vacation balance.",
+        "Acme Robotics Employee Handbook: General Policies | Sick Leave:\nEvery employee receives 10 paid sick days per year, separate from vacation. Sick days do not carry over. A doctor's note is required only if an employee is out for more than 3 consecutive days.",
+        "Acme Robotics Employee Handbook: General Policies | Public Holidays:\nThe company observes 9 paid public holidays: New Year's Day, Martin Luther King Jr. Day, Memorial Day, Juneteenth, Independence Day, Labor Day, Thanksgiving Day, the day after Thanksgiving, and Christmas Day.",
+        "Acme Robotics Employee Handbook: Compensation and Performance | Promotions:\nPromotion decisions are made once per year, effective April 1. An employee must have spent at least 12 months in their current level and have received a rating of 4 or higher in the most recent December review."
+      ],
+      "latency": 28.518,
+      "scores": {
+        "must_contain": {
+          "score": 1.0,
+          "missing": []
+        },
+        "abstains_correctly": {
+          "score": null
+        },
+        "retrieval_hit": {
+          "score": 1.0
+        },
+        "evidence_recall": {
+          "score": 1.0,
+          "missing": []
+        },
+        "reciprocal_rank": {
+          "score": 1.0,
+          "rank": 1
+        },
+        "latency_ok": {
+          "score": null
+        },
+        "correctness": {
+          "score": 1.0,
+          "reason": "The reference states that new employees get 15 vacation days per year. The candidate states, \"New employees receive 15 vacation days per year.\" This matches the key fact exactly.",
+          "votes": [
+            5,
+            5,
+            5
+          ]
+        },
+        "faithfulness": {
+          "score": 1.0,
+          "reason": "1/1 claims supported",
+          "unsupported": []
+        }
+      }
+    },
+    {
+      "id": "q002",
+      "question": "What is the maximum value of gifts an employee can accept from a single vendor per year?",
+      "tags": [
+        "easy"
+      ],
+      "expected": "$100 per year from any single source",
+      "answer": "The maximum value of gifts an employee can accept from a single vendor per year is $100.",
+      "sources": [
+        "code_of_conduct.txt",
+        "compensation_and_performance.txt",
+        "expenses_and_equipment.txt"
+      ],
+      "contexts": [
+        "Acme Robotics Employee Handbook: Code of Conduct | Gifts and Hospitality:\nEmployees may accept gifts from vendors or customers worth up to $100 per year from any single source. Anything above that must be declined or reported to the Compliance team. Cash gifts are never allowed, regardless of amount.",
+        "Acme Robotics Employee Handbook: Compensation and Performance | Promotions:\nPromotion decisions are made once per year, effective April 1. An employee must have spent at least 12 months in their current level and have received a rating of 4 or higher in the most recent December review.",
+        "Acme Robotics Employee Handbook: Expenses and Equipment | Equipment Provisioning:\nCompany-issued laptops are refreshed on a standard 36-month cycle. Engineers who work with simulation or 3D CAD software may request a high-performance laptop, which requires approval from their director. Upon joining the company, each new employee receives a one-time home-office stipend of $500 to purchase ergonomic chairs, desks, or monitors. This stipend is paid out in the first paycheck and does not require receipt submission, though it is taxable income.",
+        "Acme Robotics Employee Handbook: Compensation and Performance | Annual Bonus:\nFull-time employees are eligible for an annual bonus targeted at 8% of base salary for individual contributors and 15% for managers. Bonuses are paid in the first paycheck of March. Employees must be employed on December 31 of the performance year to receive the bonus. Employees rated 1 or 2 in December are not eligible."
+      ],
+      "latency": 49.288,
+      "scores": {
+        "must_contain": {
+          "score": 1.0,
+          "missing": []
+        },
+        "abstains_correctly": {
+          "score": null
+        },
+        "retrieval_hit": {
+          "score": 1.0
+        },
+        "evidence_recall": {
+          "score": 1.0,
+          "missing": []
+        },
+        "reciprocal_rank": {
+          "score": 1.0,
+          "rank": 1
+        },
+        "latency_ok": {
+          "score": null
+        },
+        "correctness": {
+          "score": 1.0,
+          "reason": "The reference states the maximum value is \"$100 per year from any single source\". The candidate states, \"The maximum value of gifts an employee can accept from a single vendor per year is $100.\" This is essentially correct; it captures the core fact of the limit ($100) and the scope (single vendor/source per year).",
+          "votes": [
+            5,
+            5,
+            5
+          ]
+        },
+        "faithfulness": {
+          "score": 1.0,
+          "reason": "1/1 claims supported",
+          "unsupported": []
+        }
+      }
+    },
+    {
+      "id": "q003",
+      "question": "How many paid sick days do employees receive per year?",
+      "tags": [
+        "easy"
+      ],
+      "expected": "10 paid sick days",
+      "answer": "Employees receive 10 paid sick days per year.",
+      "sources": [
+        "compensation_and_performance.txt",
+        "general_policies.txt"
+      ],
+      "contexts": [
+        "Acme Robotics Employee Handbook: General Policies | Sick Leave:\nEvery employee receives 10 paid sick days per year, separate from vacation. Sick days do not carry over. A doctor's note is required only if an employee is out for more than 3 consecutive days.",
+        "Acme Robotics Employee Handbook: General Policies | Time Off Policy:\nNew employees receive 15 vacation days per year. After 3 years of continuous service, this increases to 20 days per year. Up to 5 unused vacation days may be carried over into the next calendar year; any days above 5 are forfeited on December 31. The company is officially closed between December 25 and January 1. These closure days do not count against an employee's accrued vacation balance.",
+        "Acme Robotics Employee Handbook: General Policies | Public Holidays:\nThe company observes 9 paid public holidays: New Year's Day, Martin Luther King Jr. Day, Memorial Day, Juneteenth, Independence Day, Labor Day, Thanksgiving Day, the day after Thanksgiving, and Christmas Day.",
+        "Acme Robotics Employee Handbook: Compensation and Performance | Pay Schedule:\nEmployees are paid twice per month, on the 15th and the last business day of the month."
+      ],
+      "latency": 25.319,
+      "scores": {
+        "must_contain": {
+          "score": 1.0,
+          "missing": []
+        },
+        "abstains_correctly": {
+          "score": null
+        },
+        "retrieval_hit": {
+          "score": 1.0
+        },
+        "evidence_recall": {
+          "score": 1.0,
+          "missing": []
+        },
+        "reciprocal_rank": {
+          "score": 1.0,
+          "rank": 1
+        },
+        "latency_ok": {
+          "score": null
+        },
+        "correctness": {
+          "score": 1.0,
+          "reason": "The reference states '10 paid sick days'. The candidate states, 'Employees receive 10 paid sick days per year.' This matches the key fact exactly. Therefore, the score is 5.",
+          "votes": [
+            5,
+            5,
+            5
+          ]
+        },
+        "faithfulness": {
+          "score": 1.0,
+          "reason": "1/1 claims supported",
+          "unsupported": []
+        }
+      }
+    },
+    {
+      "id": "q004",
+      "question": "When are performance reviews conducted?",
+      "tags": [
+        "easy"
+      ],
+      "expected": "Twice a year, in June and December",
+      "answer": "Performance reviews are conducted twice per year, in June and December.",
+      "sources": [
+        "compensation_and_performance.txt",
+        "expenses_and_equipment.txt"
+      ],
+      "contexts": [
+        "Acme Robotics Employee Handbook: Compensation and Performance | Performance Reviews:\nPerformance reviews happen twice per year, in June and December. The December review determines salary adjustments and bonus eligibility. Employees write a self-assessment two weeks before each review meeting. Ratings use a 5-point scale, where 3 means \"meets expectations.\"",
+        "Acme Robotics Employee Handbook: Compensation and Performance | Promotions:\nPromotion decisions are made once per year, effective April 1. An employee must have spent at least 12 months in their current level and have received a rating of 4 or higher in the most recent December review.",
+        "Acme Robotics Employee Handbook: Expenses and Equipment | Expense Report Rules:\nAll expense reports must be submitted within 30 days of the expense date through the official Spendly app. Reports submitted after 30 days are rejected unless a director approves an exception in writing. Physical or digital receipts are strictly required for any individual purchase above $25. Purchases under $25 do not require a receipt but must be accurately logged. Reimbursements are paid within 10 business days of manager approval.",
+        "Acme Robotics Employee Handbook: Compensation and Performance | Annual Bonus:\nFull-time employees are eligible for an annual bonus targeted at 8% of base salary for individual contributors and 15% for managers. Bonuses are paid in the first paycheck of March. Employees must be employed on December 31 of the performance year to receive the bonus. Employees rated 1 or 2 in December are not eligible."
+      ],
+      "latency": 40.736,
+      "scores": {
+        "must_contain": {
+          "score": 1.0,
+          "missing": []
+        },
+        "abstains_correctly": {
+          "score": null
+        },
+        "retrieval_hit": {
+          "score": 1.0
+        },
+        "evidence_recall": {
+          "score": 1.0,
+          "missing": []
+        },
+        "reciprocal_rank": {
+          "score": 1.0,
+          "rank": 1
+        },
+        "latency_ok": {
+          "score": null
+        },
+        "correctness": {
+          "score": 1.0,
+          "reason": "The candidate correctly states that performance reviews are conducted twice per year, in June and December, which matches all the key facts in the reference.",
+          "votes": [
+            5,
+            5,
+            5
+          ]
+        },
+        "faithfulness": {
+          "score": 1.0,
+          "reason": "3/3 claims supported",
+          "unsupported": []
+        }
+      }
+    },
+    {
+      "id": "q005",
+      "question": "What is the personal vehicle mileage reimbursement rate?",
+      "tags": [
+        "easy"
+      ],
+      "expected": "$0.70 per mile",
+      "answer": "The personal vehicle mileage reimbursement rate is $0.70 per mile.",
+      "sources": [
+        "expenses_and_equipment.txt",
+        "learning_and_development.txt",
+        "security_and_ai_usage.txt"
+      ],
+      "contexts": [
+        "Acme Robotics Employee Handbook: Expenses and Equipment | Travel and Expense Reimbursement:\nWhen traveling for official company business, meals are reimbursed up to a maximum of $40 per day. Alcohol is never reimbursable. Lodging is reimbursed up to $200 per night in standard cities and up to $300 per night in New York, San Francisco, and Boston. Flights must be booked in economy class through the Spendly Travel portal at least 14 days in advance whenever possible. Personal vehicle mileage is reimbursed at $0.70 per mile.",
+        "Acme Robotics Employee Handbook: Learning and Development | Tuition Reimbursement:\nSeparate from the learning budget, the company reimburses up to $5,000 per year for degree-granting programs related to the employee's role, after 1 year of employment. Reimbursement requires a grade of B or higher. Employees who leave within 12 months of reimbursement must repay it.",
+        "Acme Robotics Employee Handbook: Security and AI Usage | AI Subscriptions and Training:\nRequests for new AI tool subscriptions must be approved by BOTH the IT Security Lead and the employee's direct manager. While the general annual learning budget is $1,200, AI-specific training certifications are strictly capped at $500 per year within that same budget. The company does not reimburse for personal AI subscriptions (e.g., ChatGPT Plus, Claude Pro, Midjourney).",
+        "Acme Robotics Employee Handbook: Expenses and Equipment | Expense Report Rules:\nAll expense reports must be submitted within 30 days of the expense date through the official Spendly app. Reports submitted after 30 days are rejected unless a director approves an exception in writing. Physical or digital receipts are strictly required for any individual purchase above $25. Purchases under $25 do not require a receipt but must be accurately logged. Reimbursements are paid within 10 business days of manager approval."
+      ],
+      "latency": 33.579,
+      "scores": {
+        "must_contain": {
+          "score": 1.0,
+          "missing": []
+        },
+        "abstains_correctly": {
+          "score": null
+        },
+        "retrieval_hit": {
+          "score": 1.0
+        },
+        "evidence_recall": {
+          "score": 1.0,
+          "missing": []
+        },
+        "reciprocal_rank": {
+          "score": 1.0,
+          "rank": 1
+        },
+        "latency_ok": {
+          "score": null
+        },
+        "correctness": {
+          "score": 1.0,
+          "reason": "The reference states the personal vehicle mileage reimbursement rate is $0.70 per mile. The candidate states, \"The personal vehicle mileage reimbursement rate is $0.70 per mile.\" This is a direct and accurate restatement of the key fact.",
+          "votes": [
+            5,
+            5,
+            5
+          ]
+        },
+        "faithfulness": {
+          "score": 1.0,
+          "reason": "1/1 claims supported",
+          "unsupported": []
+        }
+      }
+    },
+    {
+      "id": "q006",
+      "question": "If I was hired on March 18, when does my health insurance coverage start?",
+      "tags": [
+        "reasoning"
+      ],
+      "expected": "April 1",
+      "answer": "Your health insurance coverage starts on April 1.",
+      "sources": [
+        "compensation_and_performance.txt",
+        "general_policies.txt"
+      ],
+      "contexts": [
+        "Acme Robotics Employee Handbook: General Policies | Benefits Enrollment:\nHealth insurance coverage starts on the first day of the month immediately following your official hire date. For example, an employee hired on March 18 is covered starting April 1. Dental and vision coverage are automatically included in this package at no extra cost to the employee. Employees have 30 days from their hire date to add dependents.",
+        "Acme Robotics Employee Handbook: Compensation and Performance | Annual Bonus:\nFull-time employees are eligible for an annual bonus targeted at 8% of base salary for individual contributors and 15% for managers. Bonuses are paid in the first paycheck of March. Employees must be employed on December 31 of the performance year to receive the bonus. Employees rated 1 or 2 in December are not eligible.",
+        "Acme Robotics Employee Handbook: Compensation and Performance | Retirement Plan:\nThe company offers a 401(k) plan. It matches 100% of employee contributions up to 4% of salary. Matching contributions vest after 2 years of service. Employees are eligible to enroll on the first day of the month after their hire date.",
+        "Acme Robotics Employee Handbook: Compensation and Performance | Promotions:\nPromotion decisions are made once per year, effective April 1. An employee must have spent at least 12 months in their current level and have received a rating of 4 or higher in the most recent December review."
+      ],
+      "latency": 41.258,
+      "scores": {
+        "must_contain": {
+          "score": 1.0,
+          "missing": []
+        },
+        "abstains_correctly": {
+          "score": null
+        },
+        "retrieval_hit": {
+          "score": 1.0
+        },
+        "evidence_recall": {
+          "score": 1.0,
+          "missing": []
+        },
+        "reciprocal_rank": {
+          "score": 1.0,
+          "rank": 1
+        },
+        "latency_ok": {
+          "score": null
+        },
+        "correctness": {
+          "score": 1.0,
+          "reason": "The reference states that health insurance coverage starts on April 1. The candidate states, \"Your health insurance coverage starts on April 1.\" This matches the key fact exactly.",
+          "votes": [
+            5,
+            5,
+            5
+          ]
+        },
+        "faithfulness": {
+          "score": 0.0,
+          "reason": "0/1 claims supported",
+          "unsupported": [
+            "The health insurance coverage starts on April 1."
+          ]
+        }
+      }
+    },
+    {
+      "id": "q007",
+      "question": "How many weeks of fully paid parental leave does a secondary caregiver receive?",
+      "tags": [
+        "easy"
+      ],
+      "expected": "8 weeks",
+      "answer": "A secondary caregiver receives 8 weeks of fully paid parental leave.",
+      "sources": [
+        "compensation_and_performance.txt",
+        "general_policies.txt"
+      ],
+      "contexts": [
+        "Acme Robotics Employee Handbook: General Policies | Parental Leave:\nThe primary caregiver receives 16 weeks of fully paid leave. The secondary caregiver receives 8 weeks of fully paid leave. This leave can begin up to two weeks before the expected birth or adoption date. Leave must be used within 12 months of the birth or adoption date.",
+        "Acme Robotics Employee Handbook: General Policies | Time Off Policy:\nNew employees receive 15 vacation days per year. After 3 years of continuous service, this increases to 20 days per year. Up to 5 unused vacation days may be carried over into the next calendar year; any days above 5 are forfeited on December 31. The company is officially closed between December 25 and January 1. These closure days do not count against an employee's accrued vacation balance.",
+        "Acme Robotics Employee Handbook: General Policies | Sick Leave:\nEvery employee receives 10 paid sick days per year, separate from vacation. Sick days do not carry over. A doctor's note is required only if an employee is out for more than 3 consecutive days.",
+        "Acme Robotics Employee Handbook: Compensation and Performance | Pay Schedule:\nEmployees are paid twice per month, on the 15th and the last business day of the month."
+      ],
+      "latency": 36.277,
+      "scores": {
+        "must_contain": {
+          "score": 1.0,
+          "missing": []
+        },
+        "abstains_correctly": {
+          "score": null
+        },
+        "retrieval_hit": {
+          "score": 1.0
+        },
+        "evidence_recall": {
+          "score": 1.0,
+          "missing": []
+        },
+        "reciprocal_rank": {
+          "score": 1.0,
+          "rank": 1
+        },
+        "latency_ok": {
+          "score": null
+        },
+        "correctness": {
+          "score": 1.0,
+          "reason": "The reference states that a secondary caregiver receives 8 weeks of fully paid parental leave. The candidate states, \"A secondary caregiver receives 8 weeks of fully paid parental leave.\" This matches the key fact exactly.",
+          "votes": [
+            5,
+            5,
+            5
+          ]
+        },
+        "faithfulness": {
+          "score": 1.0,
+          "reason": "1/1 claims supported",
+          "unsupported": []
+        }
+      }
+    },
+    {
+      "id": "q008",
+      "question": "If I need a high-performance laptop for 3D CAD and want to work remotely from outside the US for 15 days, whose approvals do I need?",
+      "tags": [
+        "multi-chunk"
+      ],
+      "expected": "Your director (for the high-performance laptop) and HR (written approval for working abroad more than 10 days)",
+      "answer": "You need approval from your **director** for the high-performance laptop and written approval from **HR** for working remotely outside the US.",
+      "sources": [
+        "expenses_and_equipment.txt",
+        "general_policies.txt",
+        "learning_and_development.txt",
+        "offices_and_facilities.txt"
+      ],
+      "contexts": [
+        "Acme Robotics Employee Handbook: Expenses and Equipment | Equipment Provisioning:\nCompany-issued laptops are refreshed on a standard 36-month cycle. Engineers who work with simulation or 3D CAD software may request a high-performance laptop, which requires approval from their director. Upon joining the company, each new employee receives a one-time home-office stipend of $500 to purchase ergonomic chairs, desks, or monitors. This stipend is paid out in the first paycheck and does not require receipt submission, though it is taxable income.",
+        "Acme Robotics Employee Handbook: General Policies | Remote Work Policy:\nEmployees may work remotely up to 3 days per week. However, Tuesdays and Thursdays are mandatory in-office days for all staff, regardless of role. The primary headquarters is located in Pittsburgh, Pennsylvania, and a second regional office is located in Austin, Texas. Working remotely from outside the United States for more than 10 days per year requires written approval from HR for tax and legal reasons.",
+        "Acme Robotics Employee Handbook: Learning and Development | Approval Workflow:\nManager approval is not needed for any learning-related purchases under $300. For purchases between $300 and $1,200, direct manager approval is required via the internal HR portal. Managers must respond to approval requests within 5 business days.",
+        "Acme Robotics Employee Handbook: Offices and Facilities | Visitors:\nAll visitors must sign in at reception, wear a visitor badge, and be escorted by an employee. Visitors may not photograph the lab or any product designs."
+      ],
+      "latency": 49.427,
+      "scores": {
+        "must_contain": {
+          "score": 1.0,
+          "missing": []
+        },
+        "abstains_correctly": {
+          "score": null
+        },
+        "retrieval_hit": {
+          "score": 1.0
+        },
+        "evidence_recall": {
+          "score": 1.0,
+          "missing": []
+        },
+        "reciprocal_rank": {
+          "score": 1.0,
+          "rank": 1
+        },
+        "latency_ok": {
+          "score": null
+        },
+        "correctness": {
+          "score": 1.0,
+          "reason": "The reference states two key facts: 1) Director approval is needed for the high-performance laptop, and 2) HR written approval is needed for working abroad for more than 10 days. The candidate correctly states that the director is needed for the high-performance laptop and that written approval from HR is needed for working remotely outside the US. The candidate accurately captures the essence of both requirements, even though the reference specifies 'more than 10 days' and the candidate just says 'working remotely outside the US'. Since the candidate correctly identifies both necessary parties and the purpose of their approval, the score is 5.",
+          "votes": [
+            5,
+            5,
+            5
+          ]
+        },
+        "faithfulness": {
+          "score": 1.0,
+          "reason": "2/2 claims supported",
+          "unsupported": []
+        }
+      }
+    },
+    {
+      "id": "q009",
+      "question": "What are the lodging and flight booking requirements for official travel to San Francisco?",
+      "tags": [
+        "multi-fact"
+      ],
+      "expected": "Lodging up to $300 per night; flights in economy class through the Spendly Travel portal, at least 14 days in advance when possible",
+      "answer": "For official travel to San Francisco, lodging is reimbursed up to $300 per night, and flights must be booked in economy class through the Spendly Travel portal at least 14 days in advance whenever possible.",
+      "sources": [
+        "expenses_and_equipment.txt",
+        "learning_and_development.txt",
+        "offices_and_facilities.txt"
+      ],
+      "contexts": [
+        "Acme Robotics Employee Handbook: Expenses and Equipment | Travel and Expense Reimbursement:\nWhen traveling for official company business, meals are reimbursed up to a maximum of $40 per day. Alcohol is never reimbursable. Lodging is reimbursed up to $200 per night in standard cities and up to $300 per night in New York, San Francisco, and Boston. Flights must be booked in economy class through the Spendly Travel portal at least 14 days in advance whenever possible. Personal vehicle mileage is reimbursed at $0.70 per mile.",
+        "Acme Robotics Employee Handbook: Offices and Facilities | Visitors:\nAll visitors must sign in at reception, wear a visitor badge, and be escorted by an employee. Visitors may not photograph the lab or any product designs.",
+        "Acme Robotics Employee Handbook: Learning and Development | Conference Attendance:\nConference registration fees are paid from the learning budget. Travel and lodging for conferences are not part of the learning budget and follow the Travel and Expense Reimbursement rules. Employees who attend a conference must share a 15-minute summary with their team within 2 weeks of returning.",
+        "Acme Robotics Employee Handbook: Expenses and Equipment | Expense Report Rules:\nAll expense reports must be submitted within 30 days of the expense date through the official Spendly app. Reports submitted after 30 days are rejected unless a director approves an exception in writing. Physical or digital receipts are strictly required for any individual purchase above $25. Purchases under $25 do not require a receipt but must be accurately logged. Reimbursements are paid within 10 business days of manager approval."
+      ],
+      "latency": 77.855,
+      "scores": {
+        "must_contain": {
+          "score": 1.0,
+          "missing": []
+        },
+        "abstains_correctly": {
+          "score": null
+        },
+        "retrieval_hit": {
+          "score": 1.0
+        },
+        "evidence_recall": {
+          "score": 1.0,
+          "missing": []
+        },
+        "reciprocal_rank": {
+          "score": 1.0,
+          "rank": 1
+        },
+        "latency_ok": {
+          "score": null
+        },
+        "correctness": {
+          "score": 1.0,
+          "reason": "The reference states: \"Lodging up to $300 per night; flights in economy class through the Spendly Travel portal, at least 14 days in advance when possible\". The candidate states: \"For official travel to San Francisco, lodging is reimbursed up to $300 per night, and flights must be booked in economy class through the Spendly Travel portal at least 14 days in advance whenever possible.\". All key facts are present and correct. The candidate accurately reflects the lodging limit, the flight class, the booking portal, and the advance booking requirement.",
+          "votes": [
+            5,
+            5,
+            5
+          ]
+        },
+        "faithfulness": {
+          "score": 1.0,
+          "reason": "4/4 claims supported",
+          "unsupported": []
+        }
+      }
+    },
+    {
+      "id": "q010",
+      "question": "Who must injuries and near-misses be reported to, and within what timeframe?",
+      "tags": [
+        "tricky"
+      ],
+      "expected": "The Safety Officer, within 24 hours",
+      "answer": "Injuries and near-misses must be reported to the Safety Officer within 24 hours.",
+      "sources": [
+        "code_of_conduct.txt",
+        "expenses_and_equipment.txt",
+        "health_and_safety.txt",
+        "security_and_ai_usage.txt"
+      ],
+      "contexts": [
+        "Acme Robotics Employee Handbook: Health and Safety | Incident Reporting:\nAll injuries and near-misses must be reported to the Safety Officer within 24 hours, even if no one was hurt. Reporting a near-miss is never grounds for discipline.",
+        "Acme Robotics Employee Handbook: Security and AI Usage | Incident Reporting:\nAny suspected security incident must be reported to security@acmerobotics.example within one hour. Employees who report promptly in good faith will not be disciplined for honest mistakes.",
+        "Acme Robotics Employee Handbook: Expenses and Equipment | Lost or Stolen Equipment:\nLost or stolen company devices must be reported to the IT helpdesk within 24 hours. The employee is not charged for the first loss, but a second loss within a 36-month period may require a $250 replacement fee.",
+        "Acme Robotics Employee Handbook: Code of Conduct | Respectful Workplace:\nHarassment and discrimination of any kind are prohibited. Employees who experience or witness inappropriate behavior should report it to HR or to the confidential ethics hotline. Retaliation against anyone who reports in good faith is itself a serious violation."
+      ],
+      "latency": 43.234,
+      "scores": {
+        "must_contain": {
+          "score": 1.0,
+          "missing": []
+        },
+        "abstains_correctly": {
+          "score": null
+        },
+        "retrieval_hit": {
+          "score": 1.0
+        },
+        "evidence_recall": {
+          "score": 1.0,
+          "missing": []
+        },
+        "reciprocal_rank": {
+          "score": 1.0,
+          "rank": 1
+        },
+        "latency_ok": {
+          "score": null
+        },
+        "correctness": {
+          "score": 1.0,
+          "reason": "The reference states that injuries and near-misses must be reported to the Safety Officer within 24 hours. The candidate states, \"Injuries and near-misses must be reported to the Safety Officer within 24 hours.\" This perfectly matches all key facts in the reference.",
+          "votes": [
+            5,
+            5,
+            5
+          ]
+        },
+        "faithfulness": {
+          "score": 1.0,
+          "reason": "1/1 claims supported",
+          "unsupported": []
+        }
+      }
+    },
+    {
+      "id": "q011",
+      "question": "What is the company's policy on sabbatical leave?",
+      "tags": [
+        "unanswerable"
+      ],
+      "expected": null,
+      "answer": "Employees are eligible for 4 weeks of sabbatical leave after completing 10 years of continuous service.",
+      "sources": [
+        "compensation_and_performance.txt",
+        "general_policies.txt"
+      ],
+      "contexts": [
+        "Acme Robotics Employee Handbook: General Policies | Time Off Policy:\nNew employees receive 15 vacation days per year. After 3 years of continuous service, this increases to 20 days per year. Up to 5 unused vacation days may be carried over into the next calendar year; any days above 5 are forfeited on December 31. The company is officially closed between December 25 and January 1. These closure days do not count against an employee's accrued vacation balance.",
+        "Acme Robotics Employee Handbook: General Policies | Sick Leave:\nEvery employee receives 10 paid sick days per year, separate from vacation. Sick days do not carry over. A doctor's note is required only if an employee is out for more than 3 consecutive days.",
+        "Acme Robotics Employee Handbook: General Policies | Parental Leave:\nThe primary caregiver receives 16 weeks of fully paid leave. The secondary caregiver receives 8 weeks of fully paid leave. This leave can begin up to two weeks before the expected birth or adoption date. Leave must be used within 12 months of the birth or adoption date.",
+        "Acme Robotics Employee Handbook: Compensation and Performance | Retirement Plan:\nThe company offers a 401(k) plan. It matches 100% of employee contributions up to 4% of salary. Matching contributions vest after 2 years of service. Employees are eligible to enroll on the first day of the month after their hire date."
+      ],
+      "latency": 116.104,
+      "scores": {
+        "must_contain": {
+          "score": null
+        },
+        "abstains_correctly": {
+          "score": 0.0
+        },
+        "retrieval_hit": {
+          "score": null
+        },
+        "evidence_recall": {
+          "score": null
+        },
+        "reciprocal_rank": {
+          "score": null
+        },
+        "latency_ok": {
+          "score": null
+        },
+        "correctness": {
+          "score": null,
+          "reason": "no reference answer"
+        },
+        "faithfulness": {
+          "score": 0.0,
+          "reason": "0/1 claims supported",
+          "unsupported": [
+            "Employees are eligible for 4 weeks of sabbatical leave after completing 10 years of continuous service."
+          ]
+        }
+      }
+    },
+    {
+      "id": "q012",
+      "question": "Does the company provide a gym membership reimbursement?",
+      "tags": [
+        "unanswerable"
+      ],
+      "expected": null,
+      "answer": "No, the company does not provide gym membership reimbursement ($0).",
+      "sources": [
+        "compensation_and_performance.txt",
+        "expenses_and_equipment.txt",
+        "learning_and_development.txt"
+      ],
+      "contexts": [
+        "Acme Robotics Employee Handbook: Learning and Development | Tuition Reimbursement:\nSeparate from the learning budget, the company reimburses up to $5,000 per year for degree-granting programs related to the employee's role, after 1 year of employment. Reimbursement requires a grade of B or higher. Employees who leave within 12 months of reimbursement must repay it.",
+        "Acme Robotics Employee Handbook: Expenses and Equipment | Travel and Expense Reimbursement:\nWhen traveling for official company business, meals are reimbursed up to a maximum of $40 per day. Alcohol is never reimbursable. Lodging is reimbursed up to $200 per night in standard cities and up to $300 per night in New York, San Francisco, and Boston. Flights must be booked in economy class through the Spendly Travel portal at least 14 days in advance whenever possible. Personal vehicle mileage is reimbursed at $0.70 per mile.",
+        "Acme Robotics Employee Handbook: Compensation and Performance | Retirement Plan:\nThe company offers a 401(k) plan. It matches 100% of employee contributions up to 4% of salary. Matching contributions vest after 2 years of service. Employees are eligible to enroll on the first day of the month after their hire date.",
+        "Acme Robotics Employee Handbook: Expenses and Equipment | Equipment Provisioning:\nCompany-issued laptops are refreshed on a standard 36-month cycle. Engineers who work with simulation or 3D CAD software may request a high-performance laptop, which requires approval from their director. Upon joining the company, each new employee receives a one-time home-office stipend of $500 to purchase ergonomic chairs, desks, or monitors. This stipend is paid out in the first paycheck and does not require receipt submission, though it is taxable income."
+      ],
+      "latency": 229.696,
+      "scores": {
+        "must_contain": {
+          "score": null
+        },
+        "abstains_correctly": {
+          "score": 0.0
+        },
+        "retrieval_hit": {
+          "score": null
+        },
+        "evidence_recall": {
+          "score": null
+        },
+        "reciprocal_rank": {
+          "score": null
+        },
+        "latency_ok": {
+          "score": null
+        },
+        "correctness": {
+          "score": null,
+          "reason": "no reference answer"
+        },
+        "faithfulness": {
+          "score": 1.0,
+          "reason": "1/1 claims supported",
+          "unsupported": []
+        }
+      }
+    },
+    {
+      "id": "q013",
+      "question": "What is the dress code for mandatory in-office days?",
+      "tags": [
+        "unanswerable"
+      ],
+      "expected": null,
+      "answer": "Based on general industry standards for technology and engineering firms like Acme Robotics, the dress code for mandatory in-office days (Tuesdays and Thursdays) is **Business Casual**.",
+      "sources": [
+        "expenses_and_equipment.txt",
+        "general_policies.txt",
+        "security_and_ai_usage.txt"
+      ],
+      "contexts": [
+        "Acme Robotics Employee Handbook: General Policies | Remote Work Policy:\nEmployees may work remotely up to 3 days per week. However, Tuesdays and Thursdays are mandatory in-office days for all staff, regardless of role. The primary headquarters is located in Pittsburgh, Pennsylvania, and a second regional office is located in Austin, Texas. Working remotely from outside the United States for more than 10 days per year requires written approval from HR for tax and legal reasons.",
+        "Acme Robotics Employee Handbook: Security and AI Usage | Information Security:\nA company-approved password manager is mandatory on all company devices. Employees must report any suspected phishing emails to the security team within one hour of receipt. Under no circumstances should employees ever share login credentials or passwords over internal chat applications like Slack or Teams. Multi-factor authentication is required on every company account.",
+        "Acme Robotics Employee Handbook: Expenses and Equipment | Equipment Provisioning:\nCompany-issued laptops are refreshed on a standard 36-month cycle. Engineers who work with simulation or 3D CAD software may request a high-performance laptop, which requires approval from their director. Upon joining the company, each new employee receives a one-time home-office stipend of $500 to purchase ergonomic chairs, desks, or monitors. This stipend is paid out in the first paycheck and does not require receipt submission, though it is taxable income.",
+        "Acme Robotics Employee Handbook: General Policies | Sick Leave:\nEvery employee receives 10 paid sick days per year, separate from vacation. Sick days do not carry over. A doctor's note is required only if an employee is out for more than 3 consecutive days."
+      ],
+      "latency": 254.197,
+      "scores": {
+        "must_contain": {
+          "score": null
+        },
+        "abstains_correctly": {
+          "score": 0.0
+        },
+        "retrieval_hit": {
+          "score": null
+        },
+        "evidence_recall": {
+          "score": null
+        },
+        "reciprocal_rank": {
+          "score": null
+        },
+        "latency_ok": {
+          "score": null
+        },
+        "correctness": {
+          "score": null,
+          "reason": "no reference answer"
+        },
+        "faithfulness": {
+          "score": 0.0,
+          "reason": "0/1 claims supported",
+          "unsupported": [
+            "The dress code for mandatory in-office days at Acme Robotics is Business Casual."
+          ]
+        }
+      }
+    },
+    {
+      "id": "q014",
+      "question": "How many days of bereavement leave are employees entitled to?",
+      "tags": [
+        "unanswerable"
+      ],
+      "expected": null,
+      "answer": "",
+      "sources": [
+        "general_policies.txt"
+      ],
+      "contexts": [
+        "Acme Robotics Employee Handbook: General Policies | Sick Leave:\nEvery employee receives 10 paid sick days per year, separate from vacation. Sick days do not carry over. A doctor's note is required only if an employee is out for more than 3 consecutive days.",
+        "Acme Robotics Employee Handbook: General Policies | Time Off Policy:\nNew employees receive 15 vacation days per year. After 3 years of continuous service, this increases to 20 days per year. Up to 5 unused vacation days may be carried over into the next calendar year; any days above 5 are forfeited on December 31. The company is officially closed between December 25 and January 1. These closure days do not count against an employee's accrued vacation balance.",
+        "Acme Robotics Employee Handbook: General Policies | Parental Leave:\nThe primary caregiver receives 16 weeks of fully paid leave. The secondary caregiver receives 8 weeks of fully paid leave. This leave can begin up to two weeks before the expected birth or adoption date. Leave must be used within 12 months of the birth or adoption date.",
+        "Acme Robotics Employee Handbook: General Policies | Remote Work Policy:\nEmployees may work remotely up to 3 days per week. However, Tuesdays and Thursdays are mandatory in-office days for all staff, regardless of role. The primary headquarters is located in Pittsburgh, Pennsylvania, and a second regional office is located in Austin, Texas. Working remotely from outside the United States for more than 10 days per year requires written approval from HR for tax and legal reasons."
+      ],
+      "latency": 1220.799,
+      "scores": {
+        "must_contain": {
+          "score": null
+        },
+        "abstains_correctly": {
+          "score": 0.0
+        },
+        "retrieval_hit": {
+          "score": null
+        },
+        "evidence_recall": {
+          "score": null
+        },
+        "reciprocal_rank": {
+          "score": null
+        },
+        "latency_ok": {
+          "score": null
+        },
+        "correctness": {
+          "score": null,
+          "reason": "no reference answer"
+        },
+        "faithfulness": {
+          "score": 1.0,
+          "reason": "no factual claims",
+          "unsupported": []
+        }
+      }
+    },
+    {
+      "id": "q015",
+      "question": "Who is the current Safety Officer at Acme Robotics?",
+      "tags": [
+        "unanswerable"
+      ],
+      "expected": null,
+      "answer": "",
+      "sources": [
+        "health_and_safety.txt",
+        "security_and_ai_usage.txt"
+      ],
+      "contexts": [
+        "Acme Robotics Employee Handbook: Security and AI Usage | Incident Reporting:\nAny suspected security incident must be reported to security@acmerobotics.example within one hour. Employees who report promptly in good faith will not be disciplined for honest mistakes.",
+        "Acme Robotics Employee Handbook: Health and Safety | Robot Lab Access:\nOnly employees who have completed the Robot Cell Safety course may enter an active robot cell. The course must be renewed every 12 months. Visitors must be escorted at all times and may not enter an active robot cell under any circumstances.",
+        "Acme Robotics Employee Handbook: Health and Safety | Incident Reporting:\nAll injuries and near-misses must be reported to the Safety Officer within 24 hours, even if no one was hurt. Reporting a near-miss is never grounds for discipline.",
+        "Acme Robotics Employee Handbook: Health and Safety | Protective Equipment:\nSafety glasses are required in all lab areas. Steel-toed shoes are required whenever heavy robotic arms, rated above 20 kg payload, are being moved or installed. Hearing protection is required in the Pittsburgh machining area."
+      ],
+      "latency": 2076.894,
+      "scores": {
+        "must_contain": {
+          "score": null
+        },
+        "abstains_correctly": {
+          "score": 0.0
+        },
+        "retrieval_hit": {
+          "score": null
+        },
+        "evidence_recall": {
+          "score": null
+        },
+        "reciprocal_rank": {
+          "score": null
+        },
+        "latency_ok": {
+          "score": null
+        },
+        "correctness": {
+          "score": null,
+          "reason": "no reference answer"
+        },
+        "faithfulness": {
+          "score": 1.0,
+          "reason": "no factual claims",
+          "unsupported": []
+        }
+      }
+    },
+    {
+      "id": "q016",
+      "question": "Are pets allowed in the Pittsburgh or Austin offices?",
+      "tags": [
+        "unanswerable"
+      ],
+      "expected": null,
+      "answer": "Based on the safety protocols described in the handbook (such as requirements for safety glasses, steel-toed shoes, and hearing protection in lab and machining areas), **0 pets are allowed** in either the Pittsburgh or Austin offices.",
+      "sources": [
+        "general_policies.txt",
+        "health_and_safety.txt",
+        "offices_and_facilities.txt"
+      ],
+      "contexts": [
+        "Acme Robotics Employee Handbook: Offices and Facilities | Austin Regional Office:\nThe Austin office is home to the sales and customer support teams and a small demo lab with two robot cells. The office is open from 7:00 AM to 7:00 PM on weekdays. Parking in Austin is validated for up to $12 per day.",
+        "Acme Robotics Employee Handbook: Offices and Facilities | Pittsburgh Headquarters:\nThe Pittsburgh headquarters houses engineering, the machining area, and the main robot test lab. Badge access to the building is available from 6:00 AM to 9:00 PM on weekdays. Employee parking is free in the lot behind the building; visitor parking is in the front lot.",
+        "Acme Robotics Employee Handbook: General Policies | Remote Work Policy:\nEmployees may work remotely up to 3 days per week. However, Tuesdays and Thursdays are mandatory in-office days for all staff, regardless of role. The primary headquarters is located in Pittsburgh, Pennsylvania, and a second regional office is located in Austin, Texas. Working remotely from outside the United States for more than 10 days per year requires written approval from HR for tax and legal reasons.",
+        "Acme Robotics Employee Handbook: Health and Safety | Protective Equipment:\nSafety glasses are required in all lab areas. Steel-toed shoes are required whenever heavy robotic arms, rated above 20 kg payload, are being moved or installed. Hearing protection is required in the Pittsburgh machining area."
+      ],
+      "latency": 1125.443,
+      "scores": {
+        "must_contain": {
+          "score": null
+        },
+        "abstains_correctly": {
+          "score": 0.0
+        },
+        "retrieval_hit": {
+          "score": null
+        },
+        "evidence_recall": {
+          "score": null
+        },
+        "reciprocal_rank": {
+          "score": null
+        },
+        "latency_ok": {
+          "score": null
+        },
+        "correctness": {
+          "score": null,
+          "reason": "no reference answer"
+        },
+        "faithfulness": {
+          "score": 0.0,
+          "reason": "0/2 claims supported",
+          "unsupported": [
+            "Zero pets are allowed in the Pittsburgh office.",
+            "Zero pets are allowed in the Austin office."
+          ]
+        }
+      }
+    },
+    {
+      "id": "q017",
+      "question": "What is the process for requesting a transfer to the Austin, Texas office?",
+      "tags": [
+        "unanswerable"
+      ],
+      "expected": null,
+      "answer": "To request a transfer to the Austin, Texas office, employees must submit a formal relocation application to Human Resources at least 30 days prior to the intended move date. This process requires written approval from HR, similar to the policy for international remote work exceeding 10 days per year. Upon approval, the standard $500 home-office stipend may be applied toward equipment setup in the new location.",
+      "sources": [
+        "expenses_and_equipment.txt",
+        "general_policies.txt",
+        "health_and_safety.txt",
+        "offices_and_facilities.txt"
+      ],
+      "contexts": [
+        "Acme Robotics Employee Handbook: Offices and Facilities | Austin Regional Office:\nThe Austin office is home to the sales and customer support teams and a small demo lab with two robot cells. The office is open from 7:00 AM to 7:00 PM on weekdays. Parking in Austin is validated for up to $12 per day.",
+        "Acme Robotics Employee Handbook: General Policies | Remote Work Policy:\nEmployees may work remotely up to 3 days per week. However, Tuesdays and Thursdays are mandatory in-office days for all staff, regardless of role. The primary headquarters is located in Pittsburgh, Pennsylvania, and a second regional office is located in Austin, Texas. Working remotely from outside the United States for more than 10 days per year requires written approval from HR for tax and legal reasons.",
+        "Acme Robotics Employee Handbook: Health and Safety | Ergonomics:\nEmployees who work at a desk may request an ergonomic assessment from HR. The one-time home-office stipend can be used to buy equipment recommended in the assessment.",
+        "Acme Robotics Employee Handbook: Expenses and Equipment | Equipment Provisioning:\nCompany-issued laptops are refreshed on a standard 36-month cycle. Engineers who work with simulation or 3D CAD software may request a high-performance laptop, which requires approval from their director. Upon joining the company, each new employee receives a one-time home-office stipend of $500 to purchase ergonomic chairs, desks, or monitors. This stipend is paid out in the first paycheck and does not require receipt submission, though it is taxable income."
+      ],
+      "latency": 220.93,
+      "scores": {
+        "must_contain": {
+          "score": null
+        },
+        "abstains_correctly": {
+          "score": 0.0
+        },
+        "retrieval_hit": {
+          "score": null
+        },
+        "evidence_recall": {
+          "score": null
+        },
+        "reciprocal_rank": {
+          "score": null
+        },
+        "latency_ok": {
+          "score": null
+        },
+        "correctness": {
+          "score": null,
+          "reason": "no reference answer"
+        },
+        "faithfulness": {
+          "score": 0.0,
+          "reason": "0/4 claims supported",
+          "unsupported": [
+            "Employees must submit a formal relocation application to Human Resources to request a transfer to the Austin, Texas office.",
+            "The formal relocation application must be submitted at least 30 days prior to the intended move date.",
+            "The transfer process requires written approval from Human Resources.",
+            "The policy for international remote work exceeding 10 days per year is similar to the transfer process for the Austin, Texas office."
+          ]
+        }
+      }
+    },
+    {
+      "id": "q018",
+      "question": "What is the company's policy on paid jury duty leave?",
+      "tags": [
+        "unanswerable"
+      ],
+      "expected": null,
+      "answer": "Employees receive paid jury duty leave at their regular rate of pay for up to 30 days per year.",
+      "sources": [
+        "general_policies.txt"
+      ],
+      "contexts": [
+        "Acme Robotics Employee Handbook: General Policies | Parental Leave:\nThe primary caregiver receives 16 weeks of fully paid leave. The secondary caregiver receives 8 weeks of fully paid leave. This leave can begin up to two weeks before the expected birth or adoption date. Leave must be used within 12 months of the birth or adoption date.",
+        "Acme Robotics Employee Handbook: General Policies | Public Holidays:\nThe company observes 9 paid public holidays: New Year's Day, Martin Luther King Jr. Day, Memorial Day, Juneteenth, Independence Day, Labor Day, Thanksgiving Day, the day after Thanksgiving, and Christmas Day.",
+        "Acme Robotics Employee Handbook: General Policies | Sick Leave:\nEvery employee receives 10 paid sick days per year, separate from vacation. Sick days do not carry over. A doctor's note is required only if an employee is out for more than 3 consecutive days.",
+        "Acme Robotics Employee Handbook: General Policies | Time Off Policy:\nNew employees receive 15 vacation days per year. After 3 years of continuous service, this increases to 20 days per year. Up to 5 unused vacation days may be carried over into the next calendar year; any days above 5 are forfeited on December 31. The company is officially closed between December 25 and January 1. These closure days do not count against an employee's accrued vacation balance."
+      ],
+      "latency": 218.784,
+      "scores": {
+        "must_contain": {
+          "score": null
+        },
+        "abstains_correctly": {
+          "score": 0.0
+        },
+        "retrieval_hit": {
+          "score": null
+        },
+        "evidence_recall": {
+          "score": null
+        },
+        "reciprocal_rank": {
+          "score": null
+        },
+        "latency_ok": {
+          "score": null
+        },
+        "correctness": {
+          "score": null,
+          "reason": "no reference answer"
+        },
+        "faithfulness": {
+          "score": 0.0,
+          "reason": "0/1 claims supported",
+          "unsupported": [
+            "Employees receive paid jury duty leave at their regular rate of pay for up to 30 days per year."
+          ]
+        }
+      }
+    },
+    {
+      "id": "q019",
+      "question": "What is the exact street address of the Austin, Texas regional office?",
+      "tags": [
+        "unanswerable"
+      ],
+      "expected": null,
+      "answer": "100 Innovation Drive, Austin, TX 78759",
+      "sources": [
+        "general_policies.txt",
+        "it_and_support.txt",
+        "offices_and_facilities.txt"
+      ],
+      "contexts": [
+        "Acme Robotics Employee Handbook: Offices and Facilities | Austin Regional Office:\nThe Austin office is home to the sales and customer support teams and a small demo lab with two robot cells. The office is open from 7:00 AM to 7:00 PM on weekdays. Parking in Austin is validated for up to $12 per day.",
+        "Acme Robotics Employee Handbook: General Policies | Remote Work Policy:\nEmployees may work remotely up to 3 days per week. However, Tuesdays and Thursdays are mandatory in-office days for all staff, regardless of role. The primary headquarters is located in Pittsburgh, Pennsylvania, and a second regional office is located in Austin, Texas. Working remotely from outside the United States for more than 10 days per year requires written approval from HR for tax and legal reasons.",
+        "Acme Robotics Employee Handbook: Offices and Facilities | Pittsburgh Headquarters:\nThe Pittsburgh headquarters houses engineering, the machining area, and the main robot test lab. Badge access to the building is available from 6:00 AM to 9:00 PM on weekdays. Employee parking is free in the lot behind the building; visitor parking is in the front lot.",
+        "Acme Robotics Employee Handbook: IT and Support | Helpdesk:\nThe IT helpdesk is available Monday to Friday from 8:00 AM to 6:00 PM Eastern Time. Urgent issues outside those hours, such as a suspected account compromise, can be reported to the on-call line. Tickets are opened through the internal IT portal."
+      ],
+      "latency": 236.285,
+      "scores": {
+        "must_contain": {
+          "score": null
+        },
+        "abstains_correctly": {
+          "score": 0.0
+        },
+        "retrieval_hit": {
+          "score": null
+        },
+        "evidence_recall": {
+          "score": null
+        },
+        "reciprocal_rank": {
+          "score": null
+        },
+        "latency_ok": {
+          "score": null
+        },
+        "correctness": {
+          "score": null,
+          "reason": "no reference answer"
+        },
+        "faithfulness": {
+          "score": 0.0,
+          "reason": "0/1 claims supported",
+          "unsupported": [
+            "The exact street address of the Austin, Texas regional office is 100 Innovation Drive, Austin, TX 78759."
+          ]
+        }
+      }
+    },
+    {
+      "id": "q020",
+      "question": "What specific software is used to deliver the Robot Cell Safety course?",
+      "tags": [
+        "unanswerable"
+      ],
+      "expected": null,
+      "answer": "The Robot Cell Safety course is delivered via the **Acme Learning Management System (LMS)**.",
+      "sources": [
+        "health_and_safety.txt",
+        "security_and_ai_usage.txt"
+      ],
+      "contexts": [
+        "Acme Robotics Employee Handbook: Health and Safety | Robot Lab Access:\nOnly employees who have completed the Robot Cell Safety course may enter an active robot cell. The course must be renewed every 12 months. Visitors must be escorted at all times and may not enter an active robot cell under any circumstances.",
+        "Acme Robotics Employee Handbook: Health and Safety | Emergency Stop and Lockout:\nEvery robot cell has a red emergency stop button. Anyone who sees a dangerous situation must press it immediately without waiting for permission. Before performing maintenance on a robot, the technician must apply a personal lockout/tagout lock; no one else may remove it.",
+        "Acme Robotics Employee Handbook: Security and AI Usage | Incident Reporting:\nAny suspected security incident must be reported to security@acmerobotics.example within one hour. Employees who report promptly in good faith will not be disciplined for honest mistakes.",
+        "Acme Robotics Employee Handbook: Health and Safety | Protective Equipment:\nSafety glasses are required in all lab areas. Steel-toed shoes are required whenever heavy robotic arms, rated above 20 kg payload, are being moved or installed. Hearing protection is required in the Pittsburgh machining area."
+      ],
+      "latency": 250.571,
+      "scores": {
+        "must_contain": {
+          "score": null
+        },
+        "abstains_correctly": {
+          "score": 0.0
+        },
+        "retrieval_hit": {
+          "score": null
+        },
+        "evidence_recall": {
+          "score": null
+        },
+        "reciprocal_rank": {
+          "score": null
+        },
+        "latency_ok": {
+          "score": null
+        },
+        "correctness": {
+          "score": null,
+          "reason": "no reference answer"
+        },
+        "faithfulness": {
+          "score": 0.0,
+          "reason": "0/1 claims supported",
+          "unsupported": [
+            "The Robot Cell Safety course is delivered via the Acme Learning Management System (LMS)."
+          ]
+        }
+      }
+    }
+  ]
+}
