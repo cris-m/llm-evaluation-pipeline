@@ -53,6 +53,13 @@ def file_hash(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()[:12]
 
 
+def shown(path: Path) -> str:
+    try:
+        return str(path.resolve().relative_to(Path.cwd()))
+    except ValueError:
+        return path.name
+
+
 def scrub_home_paths(text: str) -> str:
     home = str(Path.home())
     return text.replace(home, "~")
@@ -82,6 +89,7 @@ def run_case(
         }
 
     latency = time.perf_counter() - started
+    output["latency"] = latency
 
     scores: dict[str, Any] = {}
 
@@ -501,7 +509,7 @@ def main() -> None:
         results=results,
     )
 
-    print(f"\nSaved: {output_path}")
+    print(f"\nSaved: {shown(output_path)}")
     print(f"Run id: {run_id}")
 
 

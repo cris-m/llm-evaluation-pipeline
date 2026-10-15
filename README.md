@@ -24,6 +24,7 @@ model's answers with test cases, a judge model, and metrics.
 7. [Find out where it fails](docs/07-find-out-why-it-fails.md)
 8. [Evaluation runner](docs/08.evaluation_runner.md)
 9. [Automation](docs/09-automation.md)
+10.[Debug and monitor](docs/10.debug.md)
 
 ## Requirements
 
